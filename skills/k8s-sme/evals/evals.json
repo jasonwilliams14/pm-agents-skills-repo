@@ -1,0 +1,11 @@
+{
+  "skill_name": "k8s-sme",
+  "evals": [
+    {
+      "id": 2,
+      "prompt": "Build me a complete k3d + Flux GitOps setup for exposing a vLLM deployment using NGINX Gateway Fabric. I want HTTPRoutes that route /v1/chat/completions to the model, and I want Prometheus metrics wired up. Give me everything I need to drop into my flux-clusters repo.",
+      "expected_output": "Complete working YAML for: k3d cluster create command, Flux HelmRepository + HelmRelease for NGF, vLLM Deployment + Service, HTTPRoute, ServiceMonitor. Files organized in flux repo layout. Should include inline comments on non-obvious fields.",
+      "files": []
+    }
+  ]
+}
