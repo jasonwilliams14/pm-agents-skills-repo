@@ -1,0 +1,21 @@
+# Ignore OS clutter
+.DS_Store
+Thmbs.db
+
+# Ignore raw execution logs and active runtime histories
+*.log
+logs/
+cache/
+.tmp/
+
+# CRITICAL: Prevent API key, token, or local credential leakage
+.env
+*.env
+credentials/
+secrets/
+*api_key*
+*token*
+
+# Ignore temporary backup or swap files
+*.swp
+*~
