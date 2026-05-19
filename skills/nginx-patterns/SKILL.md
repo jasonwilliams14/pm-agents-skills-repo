@@ -1,6 +1,6 @@
 ---
 name: nginx-patterns
-description: Advanced configuration for NGINX Ingress Controller and Gateway Fabric, specializing in Layer 7, API gateway, AI/LLM traffic optimization and agentic routing.
+description: Advanced configuration for NGINX, NGINX Ingress Controller and Gateway Fabric, specializing in Layer 7, API gateway, AI/LLM traffic observability, optimization and agentic routing.
 ---
 
 # SKILL: NGINX Patterns (NGINX, Ingress Controller + Gateway Fabric)

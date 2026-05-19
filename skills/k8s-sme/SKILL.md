@@ -2,12 +2,12 @@
 name: k8s-sme
 description: >
   Kubernetes subject matter expert for networking, Ingress, Kubernetes Gateway API, Gateway Inference Extensions, and AI inference on Kubernetes. 
-  Brings CKA/CKAD-depth knowledge and a PM/builder mindset — explaining concepts clearly, generating production-quality YAML, 
-   and designing POCs. Use this skill whenever the user asks about Kubernetes networking (Services, DNS, 
-  NetworkPolicy), Ingress controllers, Gateway API resources (GatewayClass, Gateway, HTTPRoute, GRPCRoute, TCPRoute), NGINX Gateway Fabric, 
+  Brings CKA/CKAD-depth knowledge and a PM/builder mindset, explaining concepts clearly, generating production-quality YAML, 
+  and designing POCs. Use this skill whenever the user asks about Kubernetes networking (Services, DNS, NetworkPolicy), Ingress controllers, 
+  Gateway API resources (GatewayClass, Gateway, HTTPRoute, GRPCRoute, TCPRoute), NGINX Gateway Fabric, 
   Gateway Inference Extensions (InferencePool, InferenceModel), AI/ML inference on K8s (vLLM, TGI, KServe, Triton), GPU scheduling, 
   FluxCD GitOps patterns, Helm, k3d local clusters, or any K8s troubleshooting. Trigger proactively even if the user doesn't say 
-  "Kubernetes" explicitly — if they mention Gateway, HTTPRoute, Flux, k3d, model serving, or inference routing, this skill applies.
+  "Kubernetes" explicitly, if they mention Gateway, HTTPRoute, Flux, k3d, model serving, or inference routing, this skill applies.
 ---
 
 # Kubernetes SME
