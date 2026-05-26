@@ -48,13 +48,13 @@ skills/skill-name/
 ├── SKILL.md                  # Core skill definition and instructions
 └── references/               # Supporting documentation and templates
     ├── reference-topic.md  # Detailed reference materials
-    └── templates/            # Skill-specific templates (when applicable)
+    └── templates/            # Skill-specific templates (when applicable)◊
 ```
 
 ### Integration with Workflows
 When a skill is activated, it can reference and utilize workflows in the following ways:
 1. **Direct Reference**: Skills can reference workflow files as part of their instructions
-   - Example: The `k8s-sme` skill might reference `workflows/k8s-troubleshooting.md` when debugging Kubernetes issues
+   - Example: The `k8s-sme` skill might reference `workflows/k8s-troubleshooting.md` wh◊en debugging Kubernetes issues
 2. **Sequential Execution**: Skills can recommend or trigger specific workflows
    - Example: After diagnosing an issue with `k8s-sme`, it might suggest following the `k8-gitops-deployments.md` workflow for resolution
 3. **Context Enhancement**: Workflows provide structured, step-by-step procedures that skills can incorporate into their guidance

@@ -1,0 +1,200 @@
+name: generate-prd
+version: 1.0
+description: Generate PRD following standardized template with auto-population
+
+inputs:
+  required:
+    - initiative_name: string
+    - owner_name: string
+  optional:
+    - background_context: string
+    - related_docs: list
+    - stakeholders: list
+
+metadata:
+  auto_populate:
+    status: "Draft"
+    owner: "{owner_name}"
+    date: "{current_date_YYYY-MM-DD}"
+
+steps:
+  - id: analyze_problem_and_goals
+    description: Define the problem statement and project goals
+    actions:
+      - Identify the specific user pain point or business problem
+      - Define 2-3 key objectives for the project
+      - Articulate why this matters now
+    outputs:
+      - problem_description
+      - goals_list
+    references:
+      - references/frameworks/problem-analysis.md
+    template_section: "2. Problem Statement & Goals"
+    prompts:
+      - "What specific pain point are users experiencing?"
+      - "What are the top 2-3 goals for this initiative?"
+      - "Why is solving this problem important now?"
+
+  - id: identify_target_audience
+    description: Define primary and secondary user personas
+    depends_on: [analyze_problem_and_goals]
+    actions:
+      - Identify primary user type/persona
+      - Identify secondary user type/persona (if applicable)
+      - Document key characteristics of each audience
+    outputs:
+      - primary_audience
+      - secondary_audience
+    references:
+      - references/context/target-personas.md
+    template_section: "3. Target Audience"
+    prompts:
+      - "Who is the primary user for this feature/product?"
+      - "Are there secondary users or stakeholders?"
+
+  - id: generate_user_stories
+    description: Create user stories with importance ratings
+    depends_on: [identify_target_audience, analyze_problem_and_goals]
+    actions:
+      - Generate user stories in format "As a [user], I want to [action] so that [benefit]"
+      - Assign importance levels (Must-have, Should-have, Nice-to-have)
+      - Number stories sequentially (US.1, US.2, etc.)
+      - Organize in priority order
+    outputs:
+      - user_stories_table
+    references:
+      - references/frameworks/user-story-guide.md
+    template_section: "4. User Stories"
+    importance_levels:
+      - Must-have: "Critical for MVP/launch"
+      - Should-have: "Important but not blocking"
+      - Nice-to-have: "Future enhancement"
+    prompts:
+      - "What key actions must users be able to perform?"
+      - "What are the most critical capabilities for launch?"
+
+  - id: extract_functional_requirements
+    description: Translate user stories into detailed functional requirements
+    depends_on: [generate_user_stories]
+    actions:
+      - Convert user stories into specific functional requirements
+      - Number requirements sequentially (FR.1, FR.2, etc.)
+      - Provide detailed technical descriptions
+      - Ensure requirements are testable and measurable
+    outputs:
+      - functional_requirements_list
+    references:
+      - references/standards/requirements-writing-guide.md
+    template_section: "5. Functional Requirements"
+    prompts:
+      - "What specific functionality is needed to support each user story?"
+      - "What are the technical specifications for each requirement?"
+
+  - id: define_success_metrics
+    description: Define analytics and success metrics
+    depends_on: [analyze_problem_and_goals, generate_user_stories]
+    actions:
+      - Identify 3-5 key metrics that measure success
+      - Define each metric clearly
+      - Set specific targets or goals for each metric
+      - Ensure metrics align with project goals
+    outputs:
+      - success_metrics_list
+    references:
+      - references/frameworks/success-metrics-guide.md
+    template_section: "6. Analytics & Success Metrics"
+    prompts:
+      - "How will we measure if this project is successful?"
+      - "What specific targets should we aim for?"
+      - "What user behaviors indicate success?"
+
+  - id: identify_out_of_scope
+    description: Document items explicitly excluded from this release
+    depends_on: [extract_functional_requirements]
+    actions:
+      - List features/functionality not included in this release
+      - Clarify boundaries and constraints
+      - Note potential future enhancements
+      - Manage stakeholder expectations
+    outputs:
+      - out_of_scope_list
+    template_section: "7. Out of Scope"
+    prompts:
+      - "What features or capabilities are NOT included in this release?"
+      - "What might stakeholders expect that we're explicitly excluding?"
+
+  - id: generate_executive_summary
+    description: Create compelling one-paragraph overview
+    depends_on:
+      [analyze_problem_and_goals, generate_user_stories, define_success_metrics]
+    actions:
+      - Synthesize key points from all previous sections
+      - Write concise one-paragraph summary
+      - Highlight project importance and impact
+      - Make it accessible to executive audience
+    outputs:
+      - executive_summary
+    template_section: "1. Executive Summary"
+    prompts:
+      - "Summarize the project in one compelling paragraph"
+      - "Why should executives care about this initiative?"
+
+  - id: compile_prd
+    description: Assemble complete PRD document from all components
+    depends_on: all_previous
+    actions:
+      - Populate header with auto-generated metadata
+      - Insert all section content in correct order
+      - Apply consistent formatting
+      - Add footer with generation attribution
+      - Ensure all sections are complete
+    outputs:
+      - complete_prd_draft
+    template: templates/prd-template.md
+    format:
+      header:
+        status: "{metadata.status}"
+        owner: "{metadata.owner}"
+        date: "{metadata.date}"
+      footer: "_Generated by prd-generator skill._"
+
+  - id: review_for_completeness
+    description: Quality assurance check for PRD completeness
+    depends_on: [compile_prd]
+    actions:
+      - Verify all template sections are populated
+      - Check for missing information or placeholders
+      - Ensure consistency across sections
+      - Validate that goals align with metrics
+      - Confirm user stories map to functional requirements
+      - Identify any gaps or improvements needed
+    outputs:
+      - completeness_report
+      - improvement_suggestions
+    references:
+      - references/standards/prd-requirements-checklist.md
+    checklist:
+      - "All header fields populated?"
+      - "Problem statement clearly defined?"
+      - "Target audience specified?"
+      - "At least 3 user stories with importance levels?"
+      - "Functional requirements detailed and numbered?"
+      - "Success metrics defined with targets?"
+      - "Out of scope items listed?"
+      - "Executive summary compelling and concise?"
+
+outputs:
+  primary: complete_prd_draft
+  secondary:
+    - completeness_report
+    - improvement_suggestions
+  artifacts:
+    - problem_description
+    - user_stories_table
+    - functional_requirements_list
+    - success_metrics_list
+
+execution:
+  mode: sequential
+  checkpoint_after: [generate_user_stories, extract_functional_requirements]
+  allow_iteration: true

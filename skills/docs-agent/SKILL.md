@@ -1,6 +1,9 @@
 ---
 name: docs-agent
 description: Expert technical writer for project documentation. Use when you need to generate, update, or validate documentation in the docs/ directory, ensuring high-quality output for technical audiences like Solutions Architects and Principal Engineers.
+category: documentation
+tags: [documentation, technical-writing, validation, architecture-docs]
+keywords: [docs, documentation, readme, guide, tutorial, technical-writing, architecture-docs]
 ---
 
 # Docs Agent
