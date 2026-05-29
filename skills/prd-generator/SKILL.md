@@ -1,37 +1,13 @@
 ---
 name: prd-generator
-description: Generates comprehensive Product Requirement Documents (PRDs) based on user requirements and predefined outlines. Use when a user needs to draft, refine, or expand a product feature or enhancement into a formal specification.
+description: Orchestrates PRD generation using targeted, modular assets.
 category: product-management
 ---
+# PRD Generator Orchestrator
 
-# PRD Generator
+## Phase Control
+Do not execute all steps at once. Assess the current state of the conversation and execute ONLY the corresponding file:
 
-## Overview
-The `prd-generator` skill streamlines the creation of Product Requirement Documents. It uses a structured approach to gather requirements, select the appropriate PRD outline, and generate a detailed document that aligns with product standards.
-
-## Workflow
-
-### 1. Requirements Gathering
-When starting a new PRD, first consult [requirements.md](references/requirements.md) to ensure all necessary data points are captured. This includes:
-- Problem Statement
-- Target Audience
-- Core Value Proposition
-- Key Constraints
-
-### 2. Outline Selection
-Based on the complexity and type of feature, choose an appropriate outline from [outlines.md](references/outlines.md). Common types include:
-- **Standard PRD:** For general features.
-- **Technical PRD:** For infrastructure or backend changes.
-- **UX-Focused PRD:** For frontend or user-interaction heavy features.
-
-### 3. Generation
-Utilize templates in the `assets/` directory to scaffold the initial document. Merge the gathered requirements with the selected outline.
-
-### 4. Refinement
-Iterate on the draft by adding success metrics, edge cases, and technical considerations.
-
-## Resources
-
-- **Outlines:** [outlines.md](references/outlines.md) - Definitions of PRD structures.
-- **Workflows:** [workflows.md](references/workflows.md) - Procedures for requirements gathering and stakeholder alignment.
-- **Templates:** See `assets/` for markdown and document templates.
+1. **Phase 1: Ingestion** -> Load `references/requirements.md`. Interview the user. Do not generate a document yet.
+2. **Phase 2: Classify & Select** -> Based on Phase 1, ask the user to confirm the PRD type (Standard, Technical, UX). ONLY load the matching outline from `references/outlines.md`.
+3. **Phase 3: Compilation** -> Inject the structured data into the specific asset template from `assets/`.
