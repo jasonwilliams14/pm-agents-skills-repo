@@ -73,6 +73,20 @@ Use When:
 
 ---
 
+## product management
+
+Topics:
+- product-market fit
+- value propositions
+- PRD 
+
+Use when:
+- ideation
+- strategy
+- product innovation
+
+--- 
+
 ## Directives for Multi-Skill Sequences
 1. **Lookup Priority:** Read the semantic intent description first to verify exact matches.
 2. **Isolation Guarantee:** Executing a skill via its directory path spins up an independent subagent context loop, wiping local memory once the consolidated payload is returned.

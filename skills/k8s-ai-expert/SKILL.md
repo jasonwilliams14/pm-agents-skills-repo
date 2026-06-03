@@ -235,21 +235,3 @@ exporters:
 | [GPU Operator](https://github.com/NVIDIA/gpu-operator) | NVIDIA GPU management on K8s |
 | [Argo Workflows](https://argoproj.github.io/workflows/) | ML/AI pipeline DAGs |
 
----
-
-## Decision Framework: Local vs External Model
-
-| Factor | Use local (vLLM on K8s) | Use external API |
-|---|---|---|
-| Data privacy | ✅ Required | ❌ Risky |
-| Latency | Sub-100ms needed | 200ms+ acceptable |
-| Cost at scale | High token volume | Low/medium volume |
-| Model control | Fine-tuned model | Latest frontier model |
-| GPU availability | Have GPUs | No GPUs |
-
----
-
-## Related Skills
-- `layer8-patterns` — AI traffic routing and gateway
-- `obs-first` — Observability before shipping
-- `poc-builder` — How to structure a new POC

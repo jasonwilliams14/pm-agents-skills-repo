@@ -50,30 +50,6 @@ F5 AI Guardrails is an **AI traffic inspection and policy enforcement service**.
 It sits in the request/response path (or out-of-band via auth_request) and applies
 configurable rules to prompts and completions.
 
-### Core inspection capabilities
-
-```
-Incoming prompt
-  ↓
-┌─────────────────────────────────────────────┐
-│  F5 AI Guardrails Inspection Pipeline       │
-│                                             │
-│  1. Prompt injection detection              │
-│     └── pattern matching + semantic analysis│
-│  2. Jailbreak classification                │
-│     └── known jailbreak taxonomy matching  │
-│  3. PII detection                           │
-│     └── regex + NER: names, SSN, CC, email  │
-│  4. Content policy enforcement              │
-│     └── configurable allow/block lists      │
-│  5. Prompt size / complexity limits         │
-│     └── token count, nesting depth          │
-│  6. System prompt extraction detection      │
-│     └── "ignore previous instructions" etc  │
-└──────────────────┬──────────────────────────┘
-                   │
-          Decision: ALLOW / BLOCK / REDACT / ALERT
-```
 
 ### Guardrails decision schema
 ```json
