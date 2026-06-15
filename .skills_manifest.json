@@ -1,0 +1,572 @@
+{
+  "ai-engineer": {
+    "meta": { "name": "AI Engineer", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["ai-engineer", "ai-dev"],
+      "semantic_triggers": ["PoC", "agentic workflows", "Ollama", "llama.cpp", "LangChain", "MCP", "LLM integration", "local LLM"],
+      "intent_category": "Development",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["agentic-routing-poc"],
+      "companion_skills": ["python-dev-standard", "k8s-ai-expert"],
+      "dependency_chain": "tech-pm -> ai-engineer -> k8s-observability-ops"
+    },
+    "artifacts": {
+      "preferred_templates": ["ai-gateway-architecture-spec.md"],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/ai-engineer"
+  },
+  "ai-security-patterns": {
+    "meta": { "name": "AI Security Expert", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["ai-security-patterns", "ai-sec"],
+      "semantic_triggers": ["prompt injection", "jailbreak", "OWASP LLM", "PII leakage", "guardrails", "BOLA", "shadow api", "adversarial"],
+      "intent_category": "Security",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["security-hardening"],
+      "companion_skills": ["k8s-engineer", "ai-engineer"],
+      "dependency_chain": "ai-engineer -> ai-security-patterns -> docs-agent"
+    },
+    "artifacts": {
+      "preferred_templates": ["architecture-decision-record.md"],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/ai-security-patterns"
+  },
+  "defuddle": {
+    "meta": { "name": "Defuddle", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["defuddle"],
+      "semantic_triggers": ["extract", "scrape", "simplify web content", "clean markdown"],
+      "intent_category": "Utility",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["knowledge-synthesis"],
+      "companion_skills": ["obsidian-markdown"],
+      "dependency_chain": "defuddle -> obsidian-markdown -> obsidian-cli"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/defuddle"
+  },
+  "docs-agent": {
+    "meta": { "name": "Docs Agent", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["docs-agent", "documentation"],
+      "semantic_triggers": ["technical writing", "write docs", "update readme", "engineer handoff"],
+      "intent_category": "Documentation",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["agentic-routing-poc", "security-hardening", "cluster-troubleshooting"],
+      "companion_skills": ["obsidian-markdown"],
+      "dependency_chain": "any-skill -> docs-agent"
+    },
+    "artifacts": {
+      "preferred_templates": ["architecture-decision-record.md", "technical-design-doc.md"],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/docs-agent"
+  },
+  "find-skills": {
+    "meta": { "name": "Skill Finder", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["find-skills"],
+      "semantic_triggers": ["what skill", "how to do X", "discover capability"],
+      "intent_category": "Utility",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "List"
+    },
+    "path": "skills/find-skills"
+  },
+  "google-agents-cli-adk-code": {
+    "meta": { "name": "ADK Code Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["google-agents-cli-adk-code", "adk-code"],
+      "semantic_triggers": ["ADK python", "agent tool definition", "ADK callbacks"],
+      "intent_category": "Development",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["adk-development"],
+      "companion_skills": ["python-dev-standard"],
+      "dependency_chain": "google-agents-cli-scaffold -> google-agents-cli-adk-code"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Python"
+    },
+    "path": "skills/google-agents-cli-adk-code"
+  },
+  "google-agents-cli-deploy": {
+    "meta": { "name": "ADK Deploy Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["google-agents-cli-deploy", "adk-deploy"],
+      "semantic_triggers": ["deploy agent", "Cloud Run agent", "GKE agent deployment"],
+      "intent_category": "Infrastructure",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["adk-deployment"],
+      "companion_skills": ["platform-engineer"],
+      "dependency_chain": "google-agents-cli-adk-code -> google-agents-cli-deploy"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "YAML/Bash"
+    },
+    "path": "skills/google-agents-cli-deploy"
+  },
+  "google-agents-cli-eval": {
+    "meta": { "name": "ADK Eval Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["google-agents-cli-eval", "adk-eval"],
+      "semantic_triggers": ["evalset", "LLM-as-judge", "trajectory scoring", "agent evaluation"],
+      "intent_category": "Quality",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["adk-evaluation"],
+      "companion_skills": ["ai-engineer"],
+      "dependency_chain": "google-agents-cli-deploy -> google-agents-cli-eval"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "JSON/Markdown"
+    },
+    "path": "skills/google-agents-cli-eval"
+  },
+  "google-agents-cli-observability": {
+    "meta": { "name": "ADK Observability", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["google-agents-cli-observability", "adk-obs"],
+      "semantic_triggers": ["Cloud Trace", "agent analytics", "prompt-response logging"],
+      "intent_category": "Observability",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["adk-monitoring"],
+      "companion_skills": ["k8s-observability-ops"],
+      "dependency_chain": "google-agents-cli-deploy -> google-agents-cli-observability"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "JSON"
+    },
+    "path": "skills/google-agents-cli-observability"
+  },
+  "google-agents-cli-publish": {
+    "meta": { "name": "ADK Publish Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["google-agents-cli-publish", "adk-publish"],
+      "semantic_triggers": ["Gemini Enterprise publication", "register agent", "A2A registration"],
+      "intent_category": "Deployment",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["adk-publication"],
+      "companion_skills": [],
+      "dependency_chain": "google-agents-cli-deploy -> google-agents-cli-publish"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "CLI-Output"
+    },
+    "path": "skills/google-agents-cli-publish"
+  },
+  "google-agents-cli-scaffold": {
+    "meta": { "name": "ADK Scaffold Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["google-agents-cli-scaffold", "adk-scaffold"],
+      "semantic_triggers": ["create agent project", "start new ADK project", "scaffold agent"],
+      "intent_category": "Development",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["adk-init"],
+      "companion_skills": ["python-dev-standard"],
+      "dependency_chain": "google-agents-cli-scaffold -> google-agents-cli-adk-code"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Directory-Structure"
+    },
+    "path": "skills/google-agents-cli-scaffold"
+  },
+  "google-agents-cli-workflow": {
+    "meta": { "name": "ADK Workflow Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["google-agents-cli-workflow", "adk-workflow"],
+      "semantic_triggers": ["agent development lifecycle", "ADK coding guidelines", "agent debugging"],
+      "intent_category": "Development",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["adk-lifecycle"],
+      "companion_skills": ["ai-engineer"],
+      "dependency_chain": "google-agents-cli-workflow -> google-agents-cli-adk-code"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/google-agents-cli-workflow"
+  },
+  "json-canvas": {
+    "meta": { "name": "JSON Canvas Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["json-canvas", "canvas-files"],
+      "semantic_triggers": [".canvas", "visual mind map", "nodes and edges", "canvas layout"],
+      "intent_category": "Obsidian",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["visual-mapping"],
+      "companion_skills": ["obsidian-markdown"],
+      "dependency_chain": "obsidian-markdown -> json-canvas"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "JSON"
+    },
+    "path": "skills/json-canvas"
+  },
+  "k8s-ai-expert": {
+    "meta": { "name": "K8s AI Expert", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["k8s-ai-expert"],
+      "semantic_triggers": ["ML workloads on K8s", "GPU scheduling", "KEDA", "vLLM deployment", "scaling AI pods"],
+      "intent_category": "Infrastructure",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["ai-infra-provisioning"],
+      "companion_skills": ["k8s-engineer", "platform-engineer"],
+      "dependency_chain": "platform-engineer -> k8s-engineer -> k8s-ai-expert"
+    },
+    "artifacts": {
+      "preferred_templates": ["k8s-inference-deployment.md"],
+      "output_standard": "YAML"
+    },
+    "path": "skills/k8s-ai-expert"
+  },
+  "k8s-engineer": {
+    "meta": { "name": "Kubernetes Engineer", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["k8s-engineer", "k8s-sme"],
+      "semantic_triggers": ["Ingress", "Gateway API", "HTTPRoute", "cluster networking", "node affinity", "pod scheduling", "K8s troubleshooting", "vcluster", "k3d", "fluxcd", "argocd"],
+      "intent_category": "Infrastructure",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["cluster-lifecycle", "security-hardening", "cluster-troubleshooting"],
+      "companion_skills": ["nginx-patterns", "k8s-gateway-api", "platform-engineer"],
+      "dependency_chain": "platform-engineer -> k8s-engineer -> nginx-patterns"
+    },
+    "artifacts": {
+      "preferred_templates": ["k8s-manifest-conventions.md", "flux-gitops-repo-structure.md"],
+      "output_standard": "YAML"
+    },
+    "path": "skills/k8s-engineer"
+  },
+  "k8s-gateway-api": {
+    "meta": { "name": "Gateway API Architect", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["k8s-gateway-api"],
+      "semantic_triggers": ["GatewayClass", "HTTPRoute", "GRPCRoute", "ReferenceGrant", "Gateway API design", "KGateway", "agentgateway"],
+      "intent_category": "Infrastructure",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": ["ai-gateway-deployment"],
+      "companion_skills": ["k8s-engineer", "nginx-patterns"],
+      "dependency_chain": "k8s-engineer -> k8s-gateway-api"
+    },
+    "artifacts": {
+      "preferred_templates": ["k8s-manifest-conventions.md"],
+      "output_standard": "YAML"
+    },
+    "path": "skills/k8s-gateway-api"
+  },
+  "k8s-gateway-inference": {
+    "meta": { "name": "Gateway Inference Expert", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["k8s-gateway-inference"],
+      "semantic_triggers": ["InferencePool", "InferenceModel", "model routing", "LLM load balancing", "Gateway Inference Extensions"],
+      "intent_category": "Infrastructure",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": ["ai-gateway-deployment"],
+      "companion_skills": ["k8s-gateway-api", "nginx-patterns"],
+      "dependency_chain": "k8s-gateway-api -> k8s-gateway-inference"
+    },
+    "artifacts": {
+      "preferred_templates": ["k8s-inference-deployment.md"],
+      "output_standard": "YAML"
+    },
+    "path": "skills/k8s-gateway-inference"
+  },
+  "k8s-observability-ops": {
+    "meta": { "name": "K8s Observability Ops", "tier": "Speed", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["observability-ops", "otel-ops"],
+      "semantic_triggers": ["OpenTelemetry", "Prometheus", "Grafana", "Jaeger", "ServiceMonitor", "tracing", "RED metrics"],
+      "intent_category": "Observability",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["cluster-lifecycle", "ai-gateway-deployment", "agentic-routing-poc", "security-hardening"],
+      "companion_skills": ["k8s-engineer", "nginx-patterns"],
+      "dependency_chain": "any-infra-skill -> k8s-observability-ops"
+    },
+    "artifacts": {
+      "preferred_templates": ["nginx-observability.md"],
+      "output_standard": "YAML"
+    },
+    "path": "skills/k8s-observability-ops"
+  },
+  "nginx-patterns": {
+    "meta": { "name": "NGINX Expert", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["nginx-patterns", "nginx-sme"],
+      "semantic_triggers": ["SSE streaming", "proxy buffering", "upstream retries", "agentic routing", "NGF", "L7 tuning", "nginx-config"],
+      "intent_category": "Infrastructure",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": ["ai-gateway-deployment", "agentic-routing-poc"],
+      "companion_skills": ["k8s-engineer", "k8s-observability-ops"],
+      "dependency_chain": "k8s-engineer -> nginx-patterns -> k8s-observability-ops"
+    },
+    "artifacts": {
+      "preferred_templates": ["nginx-agentic-config.md", "nginx-ai-core-config.md", "nginx-observability.md"],
+      "output_standard": "Conf/YAML"
+    },
+    "path": "skills/nginx-patterns"
+  },
+  "obsidian-bases": {
+    "meta": { "name": "Obsidian Bases Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["obsidian-bases"],
+      "semantic_triggers": [".base files", "database-like views", "note filters", "obsidian formulas"],
+      "intent_category": "Obsidian",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["knowledge-structuring"],
+      "companion_skills": ["obsidian-markdown"],
+      "dependency_chain": "obsidian-markdown -> obsidian-bases"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "JSON/Markdown"
+    },
+    "path": "skills/obsidian-bases"
+  },
+  "obsidian-cli": {
+    "meta": { "name": "Obsidian CLI Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["obsidian-cli"],
+      "semantic_triggers": ["search vault", "vault tasks", "reload plugins", "obsidian automation"],
+      "intent_category": "Obsidian",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["knowledge-synthesis"],
+      "companion_skills": ["obsidian-markdown"],
+      "dependency_chain": "obsidian-markdown -> obsidian-cli"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "CLI-Output"
+    },
+    "path": "skills/obsidian-cli"
+  },
+  "obsidian-markdown": {
+    "meta": { "name": "Obsidian Markdown Expert", "tier": "Speed", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["obsidian-markdown"],
+      "semantic_triggers": ["wikilinks", "callouts", "markdown frontmatter", "properties", "embeds"],
+      "intent_category": "Obsidian",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["knowledge-synthesis"],
+      "companion_skills": ["obsidian-cli", "obsidian-bases"],
+      "dependency_chain": "defuddle -> obsidian-markdown"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/obsidian-markdown"
+  },
+  "platform-engineer": {
+    "meta": { "name": "Platform Engineer", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["platform-engineer"],
+      "semantic_triggers": ["platform engineering", "infrastructure", "K8s admin", "cloud provisioning", "GKE", "AKS", "EKS"],
+      "intent_category": "Infrastructure",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["cluster-lifecycle"],
+      "companion_skills": ["k8s-engineer"],
+      "dependency_chain": "platform-engineer -> k8s-engineer"
+    },
+    "artifacts": {
+      "preferred_templates": ["flux-gitops-repo-structure.md"],
+      "output_standard": "YAML"
+    },
+    "path": "skills/platform-engineer"
+  },
+  "pm-standards": {
+    "meta": { "name": "PM Standards Expert", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["pm-standards"],
+      "semantic_triggers": ["JTBD", "RICE prioritization", "OTEL PM metrics", "Jason Standard"],
+      "intent_category": "Strategy",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": ["product-definition"],
+      "companion_skills": ["tech-pm", "value-proposition"],
+      "dependency_chain": "tech-pm -> pm-standards -> prd-generator"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/pm-standards"
+  },
+  "positioning-messaging": {
+    "meta": { "name": "Positioning Expert", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["positioning-messaging"],
+      "semantic_triggers": ["competitor messaging", "launch copy", "value prop", "market positioning"],
+      "intent_category": "Strategy",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["market-entry"],
+      "companion_skills": ["value-proposition"],
+      "dependency_chain": "value-proposition -> positioning-messaging"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/positioning-messaging"
+  },
+  "prd-generator": {
+    "meta": { "name": "PRD Generator", "tier": "Speed", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["prd-generator"],
+      "semantic_triggers": ["PRD template", "PRD creation", "product requirements document"],
+      "intent_category": "Strategy",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": ["product-definition"],
+      "companion_skills": ["pm-standards"],
+      "dependency_chain": "pm-standards -> prd-generator"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/prd-generator"
+  },
+  "python-dev-standard": {
+    "meta": { "name": "Python Dev Standard", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["python-dev-standard"],
+      "semantic_triggers": ["Pydantic", "type hinting", "Google-style docstrings", "async code", "clean python"],
+      "intent_category": "Development",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["agentic-routing-poc"],
+      "companion_skills": ["ai-engineer"],
+      "dependency_chain": "ai-engineer -> python-dev-standard"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Python"
+    },
+    "path": "skills/python-dev-standard"
+  },
+  "slide-deck-creator": {
+    "meta": { "name": "Slide Deck Creator", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["slide-deck-creator", "doc-to-slides"],
+      "semantic_triggers": ["presentation outline", "slide deck", "powerpoint", "pitch deck"],
+      "intent_category": "Communication",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["presentation-build"],
+      "companion_skills": ["tech-pm"],
+      "dependency_chain": "prd-generator -> slide-deck-creator"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown/PPTX"
+    },
+    "path": "skills/slide-deck-creator"
+  },
+  "tech-pm": {
+    "meta": { "name": "Technical Product Manager", "tier": "Reasoning", "version": "1.1.0" },
+    "routing": {
+      "explicit_triggers": ["tech-pm", "product-strategy"],
+      "semantic_triggers": ["feature scoping", "roadmap", "architectural strategy", "prioritization"],
+      "intent_category": "Strategy",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["agentic-routing-poc", "product-definition"],
+      "companion_skills": ["pm-standards", "value-proposition"],
+      "dependency_chain": "tech-pm -> pm-standards -> prd-generator"
+    },
+    "artifacts": {
+      "preferred_templates": ["technical-design-doc.md"],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/tech-pm"
+  },
+  "value-proposition": {
+    "meta": { "name": "Value Prop Expert", "tier": "Reasoning", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["value-proposition"],
+      "semantic_triggers": ["JTBD value prop", "customer value delivery", "competitive advantage"],
+      "intent_category": "Strategy",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["product-definition"],
+      "companion_skills": ["tech-pm", "pm-standards"],
+      "dependency_chain": "tech-pm -> value-proposition -> positioning-messaging"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/value-proposition"
+  }
+}

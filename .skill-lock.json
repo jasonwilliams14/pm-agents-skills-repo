@@ -71,10 +71,7 @@
       "skillPath": "skills/find-skills/SKILL.md",
       "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
       "installedAt": "2026-05-15T01:12:11.670Z",
-<<<<<<< HEAD
       "updatedAt": "2026-05-27T22:18:03.791Z"
-=======
-      "updatedAt": "2026-05-15T01:12:11.670Z"
     },
     "positioning-messaging": {
       "source": "refoundai/lenny-skills",
@@ -93,7 +90,6 @@
       "skillFolderHash": "a840c9572a21b901a24cf3154c36ae76dc2dbd75",
       "installedAt": "2026-05-28T14:52:38.857Z",
       "updatedAt": "2026-05-28T14:52:38.857Z"
->>>>>>> 5e6687b (final locak)
     }
   },
   "dismissed": {

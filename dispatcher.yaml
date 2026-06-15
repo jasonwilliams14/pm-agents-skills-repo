@@ -1,0 +1,105 @@
+intent_pipelines:
+  cluster-lifecycle:
+    description: "Provisioning and GitOps bootstrapping for K8s clusters (vcluster, k3d, GKE, AKS, EKS)"
+    sequence:
+      - step: 1
+        role: CloudArchitect
+        skill: platform-engineer
+        output: "Cluster Provisioning (vcluster/k3d/Cloud Provider)"
+      - step: 2
+        role: GitOpsEngineer
+        skill: k8s-engineer
+        companion: platform-engineer
+        output: "FluxCD/ArgoCD Bootstrap & Repository Sync"
+      - step: 3
+        role: ObservabilityExpert
+        skill: k8s-observability-ops
+        output: "Baseline Monitoring (Prometheus/Grafana/OTel)"
+
+  ai-gateway-deployment:
+    description: "Deploying AI Gateway Infrastructure with Inference Extensions"
+    sequence:
+      - step: 1
+        role: GatewayArchitect
+        skill: k8s-gateway-api
+        output: "GatewayClass & HTTPRoute Definitions"
+      - step: 2
+        role: InferenceSpecialist
+        skill: k8s-gateway-inference
+        output: "InferencePool & Model Routing Configuration"
+      - step: 3
+        role: L7Tuner
+        skill: nginx-patterns
+        output: "NGINX Core Optimization (SSE, Buffering, Retries)"
+      - step: 4
+        role: Verifier
+        skill: k8s-observability-ops
+        output: "Inference Latency & Token Tracing"
+
+  agentic-routing-poc:
+    description: "Developing and deploying an agentic routing PoC"
+    sequence:
+      - step: 1
+        role: AIArchitect
+        skill: ai-engineer
+        output: "Agentic Logic & Routing Decision Tree"
+      - step: 2
+        role: NetworkEngineer
+        skill: nginx-patterns
+        companion: k8s-gateway-api
+        output: "L7 Routing Implementation (Header-based/Semantic)"
+      - step: 3
+        role: ObservabilityExpert
+        skill: k8s-observability-ops
+        output: "GenAI Semantic Convention Tracing"
+      - step: 4
+        role: TechnicalWriter
+        skill: docs-agent
+        template: architecture-decision-record.md
+        output: "POC ADR & Engineer Handoff"
+
+  cluster-troubleshooting:
+    description: "Deep-dive diagnostics and remediation of K8s cluster issues"
+    sequence:
+      - step: 1
+        role: DiagnosticEngineer
+        skill: k8s-engineer
+        output: "Resource Analysis (Logs, Events, Describe)"
+      - step: 2
+        role: PlatformSME
+        skill: platform-engineer
+        output: "Infrastructure/Node/Cloud Provider Root Cause"
+      - step: 3
+        role: RemediationExpert
+        skill: k8s-engineer
+        companion: platform-engineer
+        output: "Fix Implementation & Verification"
+      - step: 4
+        role: KnowledgeManager
+        skill: docs-agent
+        companion: obsidian-markdown
+        output: "Post-Mortem / Knowledge Base Update"
+
+  product-definition:
+    description: "From market gap to full product requirements"
+    sequence:
+      - step: 1
+        role: Strategist
+        skill: tech-pm
+        output: "Strategic Intent"
+      - step: 2
+        role: Analyst
+        skill: value-proposition
+        output: "JTBD Value Map"
+      - step: 3
+        role: Specialist
+        skill: pm-standards
+        output: "Prioritized Feature Set (RICE)"
+      - step: 4
+        role: Writer
+        skill: prd-generator
+        output: "Full PRD"
+      - step: 5
+        role: Presenter
+        skill: slide-deck-creator
+        output: "Executive Presentation"

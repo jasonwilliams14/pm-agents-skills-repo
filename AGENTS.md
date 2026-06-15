@@ -17,10 +17,13 @@
 * **Standardized Diagrams:** Always render structural, temporal, or workflow visuals using **Mermaid.js** syntax blocks.
 * **Immutable Docs:** Always capture architectural decisions and technical documentation inside the `docs/` directory using strictly formatted Markdown (`.md`).
 * **Skill Delegation:** Always check `~/.agents/skills/` for a specialized capability before attempting a complex, multi-step workflow.
+* **Codebase Traversal:** Always use grep or specific regex searches to locate target code blocks before opening a file.
+* **File Inspection Limits:** Never read more than 150 lines of code in a single file unless inspecting a complete logic flow is strictly required.
+
 
 ## Git & Collaboration
-- Commit/PR guidelines.
-- Branching strategy.
+* **Branching Strategy:** Create atomic feature/fix branches (e.g., `feature/add-dynamic-routing` or `fix/nginx-timeout`). Never commit directly to `main` or `master`.
+* **Commit/PR Guidelines:** Write structured semantic commit messages (e.g., `feat:`, `fix:`, `docs:`, `chore:`). Keep pull requests tightly scoped and describe all code changes alongside manual testing steps.
 
 ---
 
@@ -29,7 +32,8 @@
 | Domain | Allowed Frameworks & Tools | Execution Constraint |
 | :--- | :--- | :--- |
 | **Languages** | Python, Node.js, TypeScript | Default to Python for AI PoCs. Enforce strict typing in TS/Python. |
-| **Infrastructure** | k3d, kind, docker | Local testing only. |
+| **Infrastructure** | k3d, kind, docker, vcluster | GCP for GKE kubernetes clusters. |
+| **DevOps** | github actions, gitlab ci, helm | Use GitHub Actions by default for standard workflows. |
 | **Kubernetes/GitOps** | kubectl, fluxcd, helm | Treat cluster state as read-only for diagnostics. Use Flux for state mutation. |
-| **Observability** | OpenTelemetry (otel) | Instrument logs and traces on all new gateway/agentic infrastructure. |
+| **Observability** | OpenTelemetry (otel) | Instrument logs and traces on all new kubernetes/gateway/agentic infrastructure. |
 

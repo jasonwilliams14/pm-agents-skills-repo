@@ -11,14 +11,14 @@ triggers: ["gpu", "cuda", "inference", "llmops", "kserve", "keda", "operator"]
 Activate this skill when:
 - Deploying AI/ML workloads or LLM inference on K8s.
 - Configuring GPU scheduling, node affinity, or tolerations.
-- Implementing LLMOps, model serving (KServe/Seldon), or AI operators.
+- Implementing LLMOps, model serving (vllm/KServe/llm-d/triton), or AI operators.
 - Discussion involves autoscaling (KEDA) or vector database orchestration.
 
 ---
 
 ## Mental Model: K8s as the AI Runtime Fabric
 
-Kubernetes is not just a container orchestrator for AI — it is the **operating system for AI products**:
+Kubernetes is not just a container orchestrator for AI, it is the **operating system for AI products**:
 - **Scheduling** → place GPU pods on the right nodes
 - **Operators** → manage the lifecycle of models, fine-tuning jobs, vector DBs
 - **KEDA** → autoscale inference based on token queue depth, not just CPU
@@ -30,16 +30,14 @@ Kubernetes is not just a container orchestrator for AI — it is the **operating
 
 # Mental Model: The Local AI Playground
 Local clusters are simulated infrastructures within Docker. Efficiency and resource management are paramount:
-- Performance: k3d is generally faster and uses fewer resources than kind for multi-node simulations.
+- Performance: vcluster is generally faster and uses fewer resources than kind for multi-node simulations.
 - CPU-Only Inference: Treat CPU as the primary compute; focus on quantized models (GGUF/INT8) to manage system RAM and latency.
 - Resource Constraints: hardware always wins; local tools are not infinite and will saturate under heavy LLM loads.
 
 ## Operational Directives
 
 ### 1. Local Cluster Configuration
-- k3d Setup: Recommend using `--port "80:80@loadbalancer"` to expose services and `--volume` to mount local data.
-- kind Setup: Use a config file with `extraMounts` for host-to-node path mapping when local file access is required.
-- Registry: Always suggest a local container registry (e.g., `localhost:5000`) to avoid repetitive image pulling.
+- vcluster Setup: Recommend using k8s and vcluster.yaml file 
 
 ### 2. Resource Management for AI
 - Strict Limits: Always define `cpu` and `memory` limits in manifests to prevent a single local inference pod from crashing the entire Docker host.
@@ -52,6 +50,7 @@ Local clusters are simulated infrastructures within Docker. Efficiency and resou
 ## Quick Reference Commands
 - Create k3d cluster: `k3d cluster create dev --servers 1 --agents 2`.
 - Create kind cluster: `kind create cluster --config kind-config.yaml`.
+- Create vcluster cluster: `vcluster create dev01` or `vcluster create dev01 -f vcluster.yaml`
 ---
 
 ## Core Patterns
@@ -122,30 +121,7 @@ spec:
       query: sum(llm_pending_requests{service="vllm"})
 ```
 
-### Pattern 4: AI Operator Pattern (CRD)
-Make AI primitives first-class K8s citizens.
-
-```yaml
-# Custom Resource: ModelDeployment
-apiVersion: ai.company.io/v1alpha1
-kind: ModelDeployment
-metadata:
-  name: claude-haiku-prod
-spec:
-  model: claude-haiku-4-5
-  provider: anthropic
-  replicas:
-    min: 1
-    max: 5
-  tokenBudget:
-    perUserTPM: 50000
-    globalTPM: 500000
-  observability:
-    tracing: true
-    costTracking: true
-```
-
-### Pattern 5: Multi-tenant AI with ResourceQuotas
+### Pattern 4: Multi-tenant AI with ResourceQuotas
 ```yaml
 apiVersion: v1
 kind: ResourceQuota
