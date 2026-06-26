@@ -4,6 +4,68 @@ Use this cheat sheet to find the right skill combination for your task, without 
 
 ---
 
+## HOW CLAUDE INVOKES SKILLS
+
+This diagram shows how Claude processes your request and determines which skills to load:
+
+```mermaid
+graph TD
+    A["User Request<br/>(e.g., 'Deploy AI gateway')"] --> B["Load RULES.md<br/>(Execution Rules)"]
+    B --> C["Load .skills_manifest.json<br/>(Skill Registry)"]
+    C --> D["Load dispatcher.yaml<br/>(Pipelines)"]
+    D --> E{Match Intent?}
+    
+    E -->|Pipeline Found| F["Load Dispatcher Pipeline<br/>(e.g., ai-gateway-deployment)"]
+    E -->|No Pipeline| G["Search .skills_manifest.json<br/>for Semantic Triggers"]
+    
+    F --> H["Extract Skill Sequence<br/>(Step 1 → Step 2 → ...)"]
+    G --> I["Find Primary Skill<br/>(highest priority match)"]
+    
+    H --> J["Load SKILL.md files<br/>for each skill in sequence"]
+    I --> K["Check companion_skills<br/>in manifest"]
+    
+    J --> L["Execute Skill Workflow<br/>(Understand → Decide → Execute → Verify)"]
+    K --> M["Load Secondary Skills<br/>(max 2 companions)"]
+    
+    M --> N["Generate Output<br/>(manifests, docs, code)"]
+    L --> N
+    
+    N --> O["Validate with<br/>validate-skills.py"]
+    O --> P{Valid?}
+    
+    P -->|Yes| Q["Output Ready<br/>✅"]
+    P -->|No| R["Error Report<br/>❌"]
+    
+    style A fill:#e1f5ff
+    style Q fill:#c8e6c9
+    style R fill:#ffcdd2
+    style F fill:#fff9c4
+    style H fill:#f3e5f5
+    style L fill:#f3e5f5
+```
+
+**Key Files in the Flow:**
+
+| File | Purpose | When Loaded |
+|------|---------|------------|
+| **RULES.md** | Global execution rules & adoption tiers | Always (first) |
+| **.skills_manifest.json** | Skill registry with metadata | Always (second) |
+| **dispatcher.yaml** | Intent pipelines & sequences | Always (third) |
+| **SKILL.md** (individual) | Skill persona, workflow, constraints | When skill activated |
+| **validate-skills.py** | Validation automation | Before output |
+| **.skills_lookup_index.json** | O(1) keyword lookup (auto-generated) | Optional, for fast search |
+
+**Decision Flow:**
+
+1. **Intent Matching** → Check dispatcher.yaml for pipeline match
+2. **Fallback Search** → If no pipeline, grep semantic triggers in manifest
+3. **Skill Loading** → Load SKILL.md for activated skill(s)
+4. **Composition** → Check manifest for companion skills (max 1 primary + 2 secondary)
+5. **Execution** → Run skill workflow (Understand → Decide → Execute → Verify)
+6. **Validation** → Run validate-skills.py to catch errors
+
+---
+
 ## COMMON WORKFLOWS
 
 ### "I want to deploy an AI inference gateway"
