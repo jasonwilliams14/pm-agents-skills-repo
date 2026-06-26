@@ -55,3 +55,71 @@
 - **Compositional Expansion:** Once a Primary Skill is identified, check its `companion_skills`. Load them only if the task requires cross-domain expertise.
 - **Template Enforcement:** Always check the `preferred_templates` list for the active skill before generating an artifact. If a template exists in `~/.agents/templates/`, it MUST be used as the structural foundation.
 - **Result Compression:** Each step in a pipeline must output a "Crystallized Insight" (compressed summary) to be passed to the next subagent in the chain, preventing context bloat.
+
+---
+
+## 7. Skill Adoption Tiers
+
+Every skill in `.skills_manifest.json` has an `adopted_status` field indicating its lifecycle stage:
+
+### active
+- **Definition:** Used in one or more dispatcher pipelines. Core to your daily practice.
+- **Support Level:** Highest priority. Updated quarterly, actively tested.
+- **Current Skills:**
+  - `ai-engineer` — AI PoCs, agentic logic
+  - `ai-security-patterns` — GenAI security guardrails
+  - `k8s-gateway-api` — Kubernetes routing design
+  - `k8s-gateway-inference` — Model routing & inference
+  - `k8s-observability-ops` — Kubernetes observability & tracing
+  - `k8s-engineer` — Kubernetes troubleshooting & networking
+  - `nginx-patterns` — NGINX optimization & routing
+  - `docs-agent` — Technical writing & ADRs
+  - `tech-pm` — Product strategy & PRD writing
+  - `prd-generator` — PRD generation
+  - `platform-engineer` — Infrastructure & cluster provisioning
+
+### maintained
+- **Definition:** Available but not in active dispatcher pipelines. Maintained for backward compatibility and specialized tasks.
+- **Support Level:** Low-to-medium priority. Updates lag active skills.
+- **Current Skills:**
+  - `google-agents-cli-*` (7 skills) — Google ADK agent tooling
+  - `obsidian-*` (3 skills) — Obsidian knowledge management
+  - `json-canvas` — Obsidian Canvas files
+  - `positioning-messaging` — Competitive positioning
+  - `slide-deck-creator` — Slide deck generation
+  - `python-dev-standard` — Python best practices
+  - `value-proposition` — JTBD value propositions
+  - `pm-standards` — Product management frameworks
+  - `find-skills` — Skill discovery helper
+  - `defuddle` — Web content extraction
+
+### deprecated
+- **Definition:** Marked for removal. Replaced by newer skill or no longer needed.
+- **Timeline:** 90-day removal timeline from deprecation date.
+- **What to do:** Use replacement skill listed in deprecation notice.
+- **How to track:** See `SKILL_MAINTENANCE.md` deprecation timeline section.
+
+---
+
+## 8. Skill Health & Maintenance
+
+### Validation
+- Run `python ~/.agents/validate-skills.py --strict` before committing major changes
+- Validation checks for:
+  - Skill SKILL.md files exist
+  - Dispatcher pipelines reference valid skills
+  - Templates referenced actually exist
+  - No semantic trigger collisions
+  - Adopted status is consistent with pipeline membership
+
+### Versioning
+- Skills follow **Semantic Versioning** (MAJOR.MINOR.PATCH)
+  - MAJOR: Breaking API change (skill charter shifts, companion skills change)
+  - MINOR: Non-breaking addition (new triggers, new companions, new templates)
+  - PATCH: Bug fix / clarification (typo, wording, link fixes)
+- See `SKILL_MAINTENANCE.md` for complete versioning guide
+
+### Quarterly Audits
+- **Schedule:** First Thursday of each quarter (Sept 5, Dec 5, Mar 5, Jun 5)
+- **Checklist:** See `SKILL_MAINTENANCE.md` Quarterly Skill Health Audit section
+- **Deliverables:** Updated manifest, archived deprecated skills, refreshed lookup index

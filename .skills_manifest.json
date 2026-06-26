@@ -67,7 +67,7 @@
     "composition": {
       "primary_for": ["agentic-routing-poc", "security-hardening", "cluster-troubleshooting"],
       "companion_skills": ["obsidian-markdown"],
-      "dependency_chain": "any-skill -> docs-agent"
+      "dependency_chain": ""
     },
     "artifacts": {
       "preferred_templates": ["architecture-decision-record.md", "technical-design-doc.md"],
@@ -269,7 +269,7 @@
     "meta": { "name": "Kubernetes Engineer", "tier": "Reasoning", "version": "1.1.0" },
     "routing": {
       "explicit_triggers": ["k8s-engineer", "k8s-sme"],
-      "semantic_triggers": ["Ingress", "Gateway API", "HTTPRoute", "cluster networking", "node affinity", "pod scheduling", "K8s troubleshooting", "vcluster", "k3d", "fluxcd", "argocd"],
+      "semantic_triggers": ["Ingress", "cluster networking", "node affinity", "pod scheduling", "K8s troubleshooting", "vcluster", "k3d", "fluxcd", "argocd"],
       "intent_category": "Infrastructure",
       "priority": 1
     },
@@ -333,7 +333,7 @@
     "composition": {
       "primary_for": ["cluster-lifecycle", "ai-gateway-deployment", "agentic-routing-poc", "security-hardening"],
       "companion_skills": ["k8s-engineer", "nginx-patterns"],
-      "dependency_chain": "any-infra-skill -> k8s-observability-ops"
+      "dependency_chain": "k8s-engineer -> k8s-observability-ops -> docs-agent"
     },
     "artifacts": {
       "preferred_templates": ["nginx-observability.md"],
