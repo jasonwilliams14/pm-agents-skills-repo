@@ -3,7 +3,7 @@
     "meta": { "name": "AI Engineer", "tier": "Reasoning", "version": "1.1.0" },
     "routing": {
       "explicit_triggers": ["ai-engineer", "ai-dev"],
-      "semantic_triggers": ["PoC", "agentic workflows", "Ollama", "llama.cpp", "LangChain", "MCP", "LLM integration", "local LLM"],
+      "semantic_triggers": ["PoC", "agentic ai", "agentic workflows", "crewai", "Ollama", "llama.cpp", "LangChain", "MCP", "LLM integration", "local LLM"],
       "intent_category": "Development",
       "priority": 1
     },
@@ -250,7 +250,7 @@
     "meta": { "name": "K8s AI Expert", "tier": "Reasoning", "version": "1.1.0" },
     "routing": {
       "explicit_triggers": ["k8s-ai-expert"],
-      "semantic_triggers": ["ML workloads on K8s", "GPU scheduling", "KEDA", "vLLM deployment", "scaling AI pods"],
+      "semantic_triggers": ["ML workloads on K8s", "GPU scheduling", "KV cache","KEDA", "vLLM deployment", "scaling AI pods"],
       "intent_category": "Infrastructure",
       "priority": 1
     },
@@ -269,7 +269,7 @@
     "meta": { "name": "Kubernetes Engineer", "tier": "Reasoning", "version": "1.1.0" },
     "routing": {
       "explicit_triggers": ["k8s-engineer", "k8s-sme"],
-      "semantic_triggers": ["Ingress", "cluster networking", "node affinity", "pod scheduling", "K8s troubleshooting", "vcluster", "k3d", "fluxcd", "argocd"],
+      "semantic_triggers": ["Ingress", "cluster networking", "volume mounts", "multi cluster", "node affinity", "pod scheduling", "K8s troubleshooting", "vcluster", "k3d", "fluxcd", "argocd"],
       "intent_category": "Infrastructure",
       "priority": 1
     },
