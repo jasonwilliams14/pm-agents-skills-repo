@@ -1,0 +1,216 @@
+# MACHINE_CONFIG.yaml — Structured Agentic Workflow Config
+#
+# This file is parsed by both Claude Code and pi to enforce the agentic workflow.
+# Machine-readable format allows any agent to understand and follow the system.
+#
+# Format: YAML v1.0
+# Last updated: 2026-07-14
+# Version: 1.0
+
+version: "1.0"
+system_name: "Agentic AI Workflow"
+canonical_root: "~/.agents"
+
+---
+
+# CONTEXT LOADING PROTOCOL
+# Both Claude Code and pi must load context in this order
+
+context_loading:
+  priority_order:
+    - step: 1
+      file: "AGENTS.md"
+      location: "current working directory"
+      required: true
+      description: "Judgment boundaries & toolchain constraints"
+
+    - step: 2
+      file: "CLAUDE.md"
+      location: "current working directory"
+      required: true
+      description: "Standards & owner context & skill system"
+
+    - step: 3
+      file: "dispatcher.yaml"
+      location: "current working directory or ~/.agents/"
+      required: false
+      description: "Intent → skill sequence pipelines"
+
+    - step: 4
+      file: "RULES.md"
+      location: "~/.agents/"
+      required: true
+      description: "Orchestration & execution rules"
+
+    - step: 5
+      file: ".skills_manifest.json"
+      location: "~/.agents/"
+      required: true
+      description: "Skill registry & semantic triggers"
+
+---
+
+# JUDGMENT BOUNDARIES (Enforcement Tier)
+
+judgment_boundaries:
+  never:
+    - id: "destructive_ops"
+      rule: "Never delete files, directories, or git branches without explicit user confirmation"
+      applies_to: ["Claude Code", "pi"]
+
+    - id: "unverified_commits"
+      rule: "Never commit, stage, or push code without running test suite/linter first"
+      applies_to: ["Claude Code", "pi"]
+
+    - id: "legacy_assets"
+      rule: "Never install deprecated libraries or legacy dependencies"
+      applies_to: ["Claude Code", "pi"]
+
+  ask:
+    - id: "high_risk_changes"
+      rule: "Stop and ask for confirmation before refactors, network security changes, cluster state modifications"
+      applies_to: ["Claude Code", "pi"]
+
+    - id: "ambiguity"
+      rule: "Ask for clarification if task instruction conflicts with workspace configurations"
+      applies_to: ["Claude Code", "pi"]
+
+  always:
+    - id: "verification_loop"
+      rule: "Always execute workspace linter and test suite before declaring task complete"
+      applies_to: ["Claude Code"]
+
+    - id: "mermaid_diagrams"
+      rule: "Always render structural/temporal/workflow visuals using Mermaid.js syntax"
+      applies_to: ["Claude Code", "pi"]
+
+    - id: "skill_delegation"
+      rule: "Always check ~/.agents/skills/ for a specialized capability before multi-step workflows"
+      applies_to: ["Claude Code", "pi"]
+
+---
+
+# SKILL SYSTEM CONFIGURATION
+
+skill_system:
+  location: "~/.agents/skills/"
+  registry: "~/.agents/.skills_manifest.json"
+  rules: "~/.agents/RULES.md"
+  usage_guide: "~/.agents/USAGE.md"
+
+  composition_limits:
+    max_primary_skills: 1
+    max_secondary_skills: 2
+    max_total_skills: 3
+
+  dispatcher_pipelines:
+    location: "~/.agents/dispatcher.yaml"
+    fallback_strategy: "If no pipeline matches, use semantic skill lookup in .skills_manifest.json"
+
+    pipelines:
+      - name: "cluster-lifecycle"
+        description: "K8s provisioning + FluxCD bootstrap + Prometheus/Grafana"
+        skills: ["platform-engineer", "k8s-engineer", "k8s-observability-ops"]
+
+      - name: "ai-gateway-deployment"
+        description: "GatewayClass/HTTPRoute → InferencePool → NGINX → tracing"
+        skills: ["k8s-gateway-api", "k8s-gateway-inference", "nginx-patterns", "k8s-observability-ops"]
+
+      - name: "agentic-routing-poc"
+        description: "AI agentic logic → L7 routing → OTEL tracing → ADR"
+        skills: ["ai-engineer", "nginx-patterns", "k8s-gateway-api", "k8s-observability-ops", "docs-agent"]
+
+      - name: "cluster-troubleshooting"
+        description: "Diagnostics → root cause → remediation → post-mortem"
+        skills: ["k8s-engineer", "platform-engineer", "docs-agent"]
+
+      - name: "product-definition"
+        description: "Strategic intent → JTBD → RICE → PRD → slides"
+        skills: ["tech-pm", "value-proposition", "pm-standards", "prd-generator", "slide-deck-creator"]
+
+---
+
+# TEMPLATES CONFIGURATION
+
+templates:
+  location: "~/.agents/templates/"
+  required_for: ["ADRs", "design-docs", "K8s-manifests", "NGINX-configs", "infrastructure"]
+
+  available_templates:
+    - name: "architecture-decision-record.md"
+      usage: "All major architectural decisions"
+
+    - name: "technical-design-doc.md"
+      usage: "Feature designs & system architecture"
+
+    - name: "ai-gateway-architecture-spec.md"
+      usage: "AI gateway infrastructure design"
+
+    - name: "k8s-inference-deployment.md"
+      usage: "vLLM + Gateway API + InferencePool setup"
+
+    - name: "nginx-ai-core-config.md"
+      usage: "NGINX streaming, timeouts, LLM optimization"
+
+    - name: "nginx-model-routing.md"
+      usage: "Model tier routing, fallback logic, Guardrails"
+
+    - name: "nginx-agentic-config.md"
+      usage: "Long-lived agentic connections, tool routing"
+
+    - name: "k3d-demo-cluster-script.md"
+      usage: "Local K8s cluster setup for POCs"
+
+    - name: "flux-gitops-repo-structure.md"
+      usage: "FluxCD directory organization"
+
+    - name: "k8s-manifest-conventions.md"
+      usage: "K8s manifest standards (labels, namespaces, RBAC)"
+
+    - name: "nginx-observability.md"
+      usage: "NGINX JSON logging, Prometheus metrics, Grafana dashboards"
+
+---
+
+# VALIDATION & COMPLETION
+
+validation:
+  command: "python3 ~/.agents/validate-skills.py --strict"
+  timing: "Before declaring ANY task complete"
+
+  checks:
+    - dispatcher_pipelines_valid: "Dispatcher pipelines reference valid skills"
+    - templates_exist: "Referenced templates actually exist"
+    - no_trigger_collisions: "No semantic trigger collisions in manifest"
+    - adoption_status_consistent: "Adoption status matches pipeline membership"
+
+---
+
+# AGENT-SPECIFIC CONFIGURATIONS
+
+agent_configs:
+  claude_code:
+    automatic_context_loading: true
+    context_location: "AGENTS.md Section 3"
+    checkpoint_required: false
+    reasoning_visible_to_user: true
+    file_operations: "Supported (Read, Write, Edit, Bash)"
+
+  pi:
+    automatic_context_loading: false
+    context_location: "PI_WORKFLOW.md (user pastes at conversation start)"
+    checkpoint_required: true
+    reasoning_visible_to_user: true
+    file_operations: "Not directly supported (user copies/pastes content)"
+
+---
+
+# REFERENCES
+
+references:
+  execution_rules: "~/.agents/RULES.md"
+  context_protocol: "~/.agents/AGENTS.md (Section 3: Context Loading Protocol)"
+  pi_workflow: "~/.agents/PI_WORKFLOW.md"
+  usage_guide: "~/.agents/USAGE.md"
+  multi_repo_setup: "~/.agents/NEW_AGENTIC_AI_PROJECT.md"
+  skill_maintenance: "~/.agents/SKILL_MAINTENANCE.md"

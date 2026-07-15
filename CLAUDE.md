@@ -213,8 +213,6 @@ The global `~/.agents/` directory is a JIT (Just-in-Time) skill dispatcher for s
 - Mandatory: spans for request tracing, metrics for latency/errors/throughput
 - Dashboards in Prometheus/Grafana for visualization
 
----
-
 ## WHAT CLAUDE SHOULD NOT DO
 
 - Commit code without your approval (ask first for significant changes)
@@ -225,8 +223,6 @@ The global `~/.agents/` directory is a JIT (Just-in-Time) skill dispatcher for s
 - Deploy to production without explicit approval
 - Make architectural decisions without consulting (propose with rationale, ask for confirmation)
 
----
-
 ## FUTURE SECTIONS (TODO)
 
 The following sections will be added when refined:
@@ -234,8 +230,6 @@ The following sections will be added when refined:
 - **Section 3:** Testing requirements, security boundaries, breaking change policies, dependency constraints
 - **Section 8:** Decision boundaries (low-risk, medium-risk, high-risk thresholds)
 - **Section 10:** Success criteria and metrics across different work types
-
----
 
 ## REFERENCES
 
