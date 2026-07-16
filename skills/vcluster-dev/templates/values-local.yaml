@@ -1,0 +1,55 @@
+# vcluster Helm Values for Local Development (Docker Desktop)
+# Usage: vcluster create my-cluster --namespace vcluster-my-cluster --values-file=values-local.yaml
+# Source: skills/vcluster-dev/templates/values-local.yaml
+
+# Control plane distribution and version
+controlPlane:
+  distro: k3s
+  k3s:
+    # Match your K3s version to what you're testing
+    image: rancher/k3s:v1.28.0
+
+# Syncer configuration (bridges virtual cluster to host)
+syncer:
+  # Logging level for troubleshooting
+  extraArgs:
+    - --log-level=info
+
+# Networking: appropriate for local Docker Desktop
+networking:
+  # vcluster's default CIDR for pod network
+  # Change if conflicts with host or other vclusters
+  clusterDomain: cluster.local
+
+# Storage: use host's local provisioner
+persistence:
+  enabled: true
+  size: 5Gi
+  # Local storage is appropriate for development; ephemeral by design
+
+# Resource limits appropriate for laptop development
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Expose metrics for debugging (optional, requires Prometheus)
+# This is useful if you're testing observability
+metrics:
+  enabled: false
+  # Set to true if you have Prometheus in host cluster
+
+# API server settings for testing
+controlPlane:
+  advanced:
+    # Useful for debugging API calls
+    virtualScheduler:
+      enabled: true
+
+# Example: Custom etcd settings (advanced)
+# etcd:
+#   enabled: true
+#   replicas: 1

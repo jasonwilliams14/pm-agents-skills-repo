@@ -568,5 +568,24 @@
       "output_standard": "Markdown"
     },
     "path": "skills/value-proposition"
+  },
+  "vcluster-dev": {
+    "meta": { "name": "vcluster Development", "tier": "Speed", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["vcluster-dev", "vcluster"],
+      "semantic_triggers": ["virtual cluster", "multi-cluster testing", "rapid cluster iteration", "lightweight K8s", "local K8s testing"],
+      "intent_category": "Infrastructure",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": ["cluster-lifecycle", "local-testing"],
+      "companion_skills": ["k8s-engineer", "platform-engineer"],
+      "dependency_chain": "platform-engineer -> vcluster-dev -> k8s-engineer"
+    },
+    "artifacts": {
+      "preferred_templates": ["templates/local-multicluster-setup.sh", "templates/github-actions-vcluster.yaml"],
+      "output_standard": "YAML/Bash"
+    },
+    "path": "skills/vcluster-dev"
   }
 }

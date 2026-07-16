@@ -1,0 +1,63 @@
+# vcluster Helm Values for Cloud Deployment (GKE)
+# Usage: vcluster create staging-cluster --namespace vcluster-staging --values-file=values-cloud-gke.yaml
+# Source: skills/vcluster-dev/templates/values-cloud-gke.yaml
+
+# Mirror local K3s version for consistency with Docker Desktop testing
+controlPlane:
+  distro: k3s
+  k3s:
+    # Ensure same version as local testing
+    image: rancher/k3s:v1.28.0
+
+# Syncer configuration
+syncer:
+  extraArgs:
+    - --log-level=info
+
+# Networking: cloud-appropriate
+networking:
+  clusterDomain: cluster.local
+
+# Storage: use GKE's storage classes
+persistence:
+  enabled: true
+  storageClassName: standard-rwo  # GKE's default storage class
+  size: 10Gi  # Larger than local dev
+
+# Resource requests: match GKE node capacity
+resources:
+  limits:
+    cpu: 2000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+# GKE-specific: expose metrics to Cloud Monitoring (optional)
+metrics:
+  enabled: true
+  # Cloud Monitoring will automatically scrape /metrics
+
+# Enable RBAC for multi-tenancy testing
+rbac:
+  enabled: true
+
+# Advanced: pod security policies or standards (K8s 1.25+)
+podSecurityStandards:
+  enabled: true
+  enforce: baseline  # or 'restricted' for stricter policies
+
+# Optional: Image pull secrets for private registries
+# imagePullSecrets:
+#   - name: gcr-secret
+
+# Optional: Node affinity (if testing node selection)
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#       - matchExpressions:
+#         - key: workload-type
+#           operator: In
+#           values:
+#           - standard

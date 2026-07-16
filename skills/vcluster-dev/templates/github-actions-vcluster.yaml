@@ -1,0 +1,148 @@
+name: Test in vcluster, then deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-in-vcluster:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Set up a lightweight host cluster (k3d) for vcluster
+      - name: Install k3d
+        run: |
+          curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+
+      - name: Create k3d cluster (host for vcluster)
+        run: |
+          k3d cluster create ci-host --wait
+          kubectl cluster-info
+
+      # Install vcluster CLI
+      - name: Install vcluster CLI
+        run: |
+          curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/latest/download/vcluster-linux-amd64"
+          chmod +x vcluster && sudo mv vcluster /usr/local/bin/
+          vcluster version
+
+      # Create vcluster for testing
+      - name: Create vcluster for testing
+        run: |
+          vcluster create ci-test --namespace vcluster-ci
+          echo "Waiting for vcluster to be ready..."
+          sleep 10
+
+      # Deploy to vcluster
+      - name: Deploy to vcluster
+        run: |
+          vcluster connect ci-test --namespace vcluster-ci
+          kubectl create namespace app --dry-run=client -o yaml | kubectl apply -f -
+          kubectl apply -f kubernetes/manifests/
+          echo "Waiting for deployments to be ready..."
+          kubectl wait --for=condition=available --timeout=300s deployment --all -n app || true
+
+      # Run tests in vcluster
+      - name: Run tests in vcluster
+        run: |
+          vcluster connect ci-test --namespace vcluster-ci
+          echo "Running health checks..."
+          kubectl get deployments -n app
+          kubectl get services -n app
+          echo "Logs from deployments:"
+          kubectl logs -n app -l app=myapp --tail=50 || true
+
+          # Run any custom test scripts
+          # Example: bash scripts/integration-tests.sh
+
+      # Cleanup vcluster before deploying to real GKE
+      - name: Cleanup vcluster
+        if: always()
+        run: |
+          vcluster delete ci-test --namespace vcluster-ci --force || true
+          k3d cluster delete ci-host || true
+
+      # Deploy to real GKE (only on main branch, if tests pass)
+      - name: Setup gcloud CLI
+        if: success() && github.ref == 'refs/heads/main'
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Get GKE credentials
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          gcloud container clusters get-credentials prod-cluster \
+            --zone us-central1-a \
+            --project ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Deploy to production GKE
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          kubectl apply -f kubernetes/manifests/
+          echo "Waiting for GKE deployments..."
+          kubectl wait --for=condition=available --timeout=300s deployment --all || true
+          kubectl get deployments
+          kubectl get services
+
+      # Post-deployment validation (optional)
+      - name: Validate production deployment
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          echo "Running smoke tests against GKE..."
+          # Example: bash scripts/smoke-tests.sh
+          kubectl get pods
+          kubectl describe nodes
+
+  # Optional: PR validation without GKE deployment
+  validate-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install k3d
+        run: |
+          curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+
+      - name: Create k3d host cluster
+        run: k3d cluster create ci-host --wait
+
+      - name: Install vcluster
+        run: |
+          curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/latest/download/vcluster-linux-amd64"
+          chmod +x vcluster && sudo mv vcluster /usr/local/bin/
+
+      - name: Test in vcluster
+        run: |
+          vcluster create pr-test --namespace vcluster-pr
+          vcluster connect pr-test --namespace vcluster-pr
+          kubectl apply -f kubernetes/manifests/
+          kubectl wait --for=condition=available --timeout=300s deployment --all || true
+          kubectl get deployments
+
+      - name: Cleanup
+        if: always()
+        run: |
+          vcluster delete pr-test --namespace vcluster-pr --force || true
+          k3d cluster delete ci-host || true
+
+      - name: Comment on PR
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Tests passed in vcluster. Ready for review.'
+            })

@@ -1,0 +1,77 @@
+{
+  "skill": "vcluster-dev",
+  "version": "1.0.0",
+  "evaluations": [
+    {
+      "id": "local-setup",
+      "name": "Local Multi-Cluster Setup",
+      "description": "User can successfully create 2 isolated vclusters on Docker Desktop and deploy test workloads",
+      "success_criteria": [
+        "Both vclusters running (vcluster list returns 2 clusters)",
+        "Deployments ready in both clusters (replicas available)",
+        "Services accessible within each cluster (DNS resolution works)",
+        "Cluster isolation verified (cluster-a pods not visible from cluster-b)"
+      ],
+      "time_to_success_target": "2 minutes",
+      "resources_required": "4GB RAM, Docker Desktop with K8s enabled",
+      "status": "pending"
+    },
+    {
+      "id": "cloud-deployment",
+      "name": "Cloud Deployment (GKE)",
+      "description": "User can deploy vcluster to GKE and validate observability integration",
+      "success_criteria": [
+        "vcluster created in GKE (pods running)",
+        "Same manifests work as local testing",
+        "Logs visible in Cloud Logging",
+        "Metrics exported to Cloud Monitoring"
+      ],
+      "time_to_success_target": "5 minutes",
+      "resources_required": "GKE cluster with Cloud Logging/Monitoring enabled",
+      "status": "pending"
+    },
+    {
+      "id": "troubleshooting",
+      "name": "Troubleshooting & Diagnostics",
+      "description": "User can diagnose and fix common vcluster issues using diagnostic runbook",
+      "success_criteria": [
+        "Identify root cause of pod failures",
+        "Resolve DNS resolution issues",
+        "Fix image pull errors with imagePullSecrets",
+        "Understand when to escalate vs. fix locally"
+      ],
+      "time_to_success_target": "5 minutes per issue",
+      "resources_required": "vcluster instance with intentional failures",
+      "status": "pending"
+    },
+    {
+      "id": "validation-checklist",
+      "name": "Pre-Deployment Validation",
+      "description": "User validates vcluster setup against Kubernetes API parity checklist",
+      "success_criteria": [
+        "All API parity checks pass (Deployments, Services, RBAC, Storage, Networking)",
+        "Cloud integration tests pass (if cloud deployment)",
+        "Multi-cluster isolation verified (if applicable)"
+      ],
+      "time_to_success_target": "5 minutes",
+      "resources_required": "Running vcluster with test deployments",
+      "status": "pending"
+    }
+  ],
+  "skill_meta": {
+    "trigger_keywords": [
+      "vcluster",
+      "virtual cluster",
+      "multi-cluster local testing",
+      "rapid cluster iteration",
+      "kubernetes api validation"
+    ],
+    "related_skills": [
+      "k8s-engineer",
+      "k8s-gateway-api",
+      "k8s-observability-ops"
+    ],
+    "maturity": "stable",
+    "last_updated": "2026-07-16"
+  }
+}
