@@ -18,6 +18,29 @@
     },
     "path": "skills/ai-engineer"
   },
+  "ai-platform-pm": {
+    "meta": { "name": "AI Platform PM", "tier": "Reasoning", "version": "1.0.0" },
+    "routing": {
+      "explicit_triggers": ["ai-platform-pm", "platform-pm"],
+      "semantic_triggers": [
+        "platform conformance", "product onboarding", "cross-product",
+        "platform standards", "AI portfolio", "deployment model",
+        "unit of value", "shared services", "conformance review"
+      ],
+      "intent_category": "Product Management",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": ["platform-conformance-review"],
+      "companion_skills": ["ai-security-patterns", "prd-generator", "positioning-messaging"],
+      "dependency_chain": "ai-platform-pm -> ai-security-patterns -> docs-agent"
+    },
+    "artifacts": {
+      "preferred_templates": ["platform-conformance-review.md"],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/ai-platform-pm"
+  },
   "ai-security-patterns": {
     "meta": { "name": "AI Security Expert", "tier": "Reasoning", "version": "1.1.0" },
     "routing": {
