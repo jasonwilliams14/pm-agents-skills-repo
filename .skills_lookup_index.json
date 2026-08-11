@@ -1,248 +1,264 @@
 {
   "ai-engineer": [
-    "Ollama",
     "local LLM",
-    "LangChain",
-    "agentic workflows",
-    "PoC",
-    "LLM integration",
+    "Ollama",
     "llama.cpp",
-    "ai-engineer",
+    "LLM integration",
+    "agentic ai",
     "MCP",
-    "ai-dev"
+    "ai-dev",
+    "ai-engineer",
+    "agentic workflows",
+    "ML Ops",
+    "PoC",
+    "crewai",
+    "LangChain"
   ],
   "ai-security-patterns": [
-    "shadow api",
-    "BOLA",
-    "guardrails",
-    "ai-sec",
-    "prompt injection",
-    "adversarial",
-    "OWASP LLM",
     "PII leakage",
+    "ai-sec",
+    "jailbreak",
     "ai-security-patterns",
-    "jailbreak"
+    "OWASP LLM",
+    "BOLA",
+    "prompt injection",
+    "guardrails",
+    "shadow api",
+    "adversarial"
   ],
   "defuddle": [
-    "clean markdown",
+    "simplify web content",
     "scrape",
-    "extract",
     "defuddle",
-    "simplify web content"
+    "extract",
+    "clean markdown"
   ],
   "docs-agent": [
-    "write docs",
+    "documentation",
     "update readme",
     "docs-agent",
-    "documentation",
+    "write docs",
     "technical writing",
     "engineer handoff"
   ],
   "find-skills": [
-    "what skill",
-    "discover capability",
     "how to do X",
-    "find-skills"
+    "find-skills",
+    "discover capability",
+    "what skill"
   ],
   "google-agents-cli-adk-code": [
-    "ADK python",
     "adk-code",
-    "agent tool definition",
+    "ADK callbacks",
     "google-agents-cli-adk-code",
-    "ADK callbacks"
+    "ADK python",
+    "agent tool definition"
   ],
   "google-agents-cli-deploy": [
-    "Cloud Run agent",
     "GKE agent deployment",
     "deploy agent",
-    "adk-deploy",
-    "google-agents-cli-deploy"
+    "google-agents-cli-deploy",
+    "Cloud Run agent",
+    "adk-deploy"
   ],
   "google-agents-cli-eval": [
-    "agent evaluation",
-    "LLM-as-judge",
-    "google-agents-cli-eval",
     "adk-eval",
-    "evalset",
-    "trajectory scoring"
+    "LLM-as-judge",
+    "trajectory scoring",
+    "google-agents-cli-eval",
+    "agent evaluation",
+    "evalset"
   ],
   "google-agents-cli-observability": [
-    "agent analytics",
-    "adk-obs",
     "prompt-response logging",
+    "Cloud Trace",
     "google-agents-cli-observability",
-    "Cloud Trace"
+    "adk-obs",
+    "agent analytics"
   ],
   "google-agents-cli-publish": [
-    "register agent",
-    "adk-publish",
     "A2A registration",
+    "adk-publish",
     "Gemini Enterprise publication",
-    "google-agents-cli-publish"
+    "google-agents-cli-publish",
+    "register agent"
   ],
   "google-agents-cli-scaffold": [
     "start new ADK project",
-    "adk-scaffold",
     "scaffold agent",
+    "create agent project",
     "google-agents-cli-scaffold",
-    "create agent project"
+    "adk-scaffold"
   ],
   "google-agents-cli-workflow": [
-    "google-agents-cli-workflow",
-    "adk-workflow",
     "agent development lifecycle",
-    "ADK coding guidelines",
-    "agent debugging"
+    "agent debugging",
+    "adk-workflow",
+    "google-agents-cli-workflow",
+    "ADK coding guidelines"
   ],
   "json-canvas": [
-    "visual mind map",
-    ".canvas",
-    "canvas layout",
-    "canvas-files",
     "nodes and edges",
-    "json-canvas"
+    "canvas layout",
+    "visual mind map",
+    "json-canvas",
+    "canvas-files",
+    ".canvas"
   ],
   "k8s-ai-expert": [
+    "KV cache",
     "KEDA",
-    "vLLM deployment",
-    "scaling AI pods",
-    "GPU scheduling",
     "ML workloads on K8s",
-    "k8s-ai-expert"
+    "kserve",
+    "gateway inference extensions",
+    "GPU scheduling",
+    "scaling AI pods",
+    "vLLM deployment"
   ],
   "k8s-engineer": [
-    "k8s-engineer",
-    "vcluster",
+    "K8s troubleshooting",
+    "fluxcd",
+    "cluster networking",
     "k3d",
     "Ingress",
+    "volume mounts",
     "node affinity",
-    "K8s troubleshooting",
-    "argocd",
-    "k8s-sme",
-    "fluxcd",
+    "vcluster",
     "pod scheduling",
-    "cluster networking"
+    "k8s-sme",
+    "k8s-engineer",
+    "multi cluster",
+    "argocd"
   ],
   "k8s-gateway-api": [
-    "ReferenceGrant",
-    "HTTPRoute",
-    "Gateway API design",
-    "GRPCRoute",
     "GatewayClass",
-    "agentgateway",
+    "Gateway API design",
     "k8s-gateway-api",
-    "KGateway"
+    "KGateway",
+    "ReferenceGrant",
+    "agentgateway",
+    "HTTPRoute",
+    "GRPCRoute"
   ],
   "k8s-gateway-inference": [
-    "model routing",
+    "Gateway Inference Extensions",
     "LLM load balancing",
     "k8s-gateway-inference",
+    "InferenceModel",
     "InferencePool",
-    "Gateway Inference Extensions",
-    "InferenceModel"
+    "model routing"
   ],
   "k8s-observability-ops": [
-    "Prometheus",
-    "RED metrics",
-    "ServiceMonitor",
-    "OpenTelemetry",
-    "tracing",
-    "Jaeger",
     "observability-ops",
     "otel-ops",
-    "Grafana"
+    "tracing",
+    "ServiceMonitor",
+    "Grafana",
+    "Jaeger",
+    "OpenTelemetry",
+    "Prometheus",
+    "RED metrics"
   ],
   "nginx-patterns": [
     "proxy buffering",
-    "nginx-config",
-    "L7 tuning",
     "upstream retries",
-    "agentic routing",
     "NGF",
-    "nginx-patterns",
     "nginx-sme",
+    "nginx-patterns",
+    "L7 tuning",
+    "nginx-config",
+    "agentic routing",
     "SSE streaming"
   ],
   "obsidian-bases": [
-    "obsidian formulas",
-    ".base files",
-    "database-like views",
+    "obsidian-bases",
     "note filters",
-    "obsidian-bases"
+    "database-like views",
+    ".base files",
+    "obsidian formulas"
   ],
   "obsidian-cli": [
-    "vault tasks",
     "obsidian-cli",
-    "obsidian automation",
+    "vault tasks",
     "reload plugins",
-    "search vault"
+    "search vault",
+    "obsidian automation"
   ],
   "obsidian-markdown": [
-    "properties",
     "markdown frontmatter",
-    "embeds",
+    "wikilinks",
     "callouts",
+    "properties",
     "obsidian-markdown",
-    "wikilinks"
+    "embeds"
   ],
   "platform-engineer": [
-    "platform engineering",
-    "AKS",
-    "GKE",
-    "K8s admin",
-    "platform-engineer",
     "infrastructure",
+    "cloud provisioning",
+    "platform-engineer",
     "EKS",
-    "cloud provisioning"
+    "AKS",
+    "platform engineering",
+    "GKE",
+    "K8s admin"
   ],
   "pm-standards": [
+    "OTEL PM metrics",
     "JTBD",
-    "pm-standards",
-    "RICE prioritization",
     "Jason Standard",
-    "OTEL PM metrics"
+    "pm-standards",
+    "RICE prioritization"
   ],
   "positioning-messaging": [
-    "value prop",
     "positioning-messaging",
-    "launch copy",
     "market positioning",
-    "competitor messaging"
+    "launch copy",
+    "competitor messaging",
+    "value prop"
   ],
   "prd-generator": [
-    "PRD template",
-    "product requirements document",
+    "PRD creation",
     "prd-generator",
-    "PRD creation"
+    "PRD template",
+    "product requirements document"
   ],
   "python-dev-standard": [
     "clean python",
     "Google-style docstrings",
     "async code",
     "python-dev-standard",
-    "type hinting",
-    "Pydantic"
+    "Pydantic",
+    "type hinting"
   ],
   "slide-deck-creator": [
-    "pitch deck",
-    "doc-to-slides",
-    "powerpoint",
     "presentation outline",
+    "powerpoint",
+    "slide-deck-creator",
+    "doc-to-slides",
     "slide deck",
-    "slide-deck-creator"
+    "pitch deck"
   ],
   "tech-pm": [
     "feature scoping",
-    "roadmap",
-    "architectural strategy",
+    "product-strategy",
     "prioritization",
+    "roadmap",
     "tech-pm",
-    "product-strategy"
+    "architectural strategy"
   ],
   "value-proposition": [
     "competitive advantage",
     "JTBD value prop",
-    "customer value delivery",
-    "value-proposition"
+    "value-proposition",
+    "customer value delivery"
+  ],
+  "vcluster-dev": [
+    "local K8s testing",
+    "lightweight K8s",
+    "rapid cluster iteration",
+    "vcluster",
+    "multi-cluster testing",
+    "virtual cluster",
+    "vcluster-dev"
   ]
 }

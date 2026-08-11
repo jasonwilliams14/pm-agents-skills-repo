@@ -17,7 +17,7 @@ Domain expertise: Kubernetes, Generative AI, AI Agents, Agentic AI, AI/ML infras
 
 Primary strategic focus: AI Security · Kubernetes Networking · SaaS / Multi-Cloud Sovereignty
 
-Documentation is born from functional prototypes. Every proposal must conclude with a Value Prop and Competitive Differentiation (NGINX Gateway Fabric vs AgentGateway/Kong/Traefik, F5 XC vs. Cloudflare/Akamai).
+Documentation is born from functional prototypes. Proposals should focus on clear technical specifications first; Value Proposition and Competitive Differentiation can be included as needed or when explicitly requested by the user.
 
 ## Product Management Philosophy
 - **North Star:** Speed to Learning > Speed to Shipping. Focus on "Minimum Viable Signal."
