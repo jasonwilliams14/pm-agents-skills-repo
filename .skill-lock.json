@@ -6,72 +6,72 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/google/agents-cli.git",
       "skillPath": "skills/google-agents-cli-adk-code/SKILL.md",
-      "skillFolderHash": "aa43f12d8fda132990b4c5b3418c4ac0d1091ccd",
+      "skillFolderHash": "b12dde7cd9d5523893667e7858c16960d0922c7c",
       "installedAt": "2026-05-15T01:12:06.162Z",
-      "updatedAt": "2026-05-15T01:12:06.162Z"
+      "updatedAt": "2026-08-13T16:00:23.402Z"
     },
     "google-agents-cli-deploy": {
       "source": "google/agents-cli",
       "sourceType": "github",
       "sourceUrl": "https://github.com/google/agents-cli.git",
       "skillPath": "skills/google-agents-cli-deploy/SKILL.md",
-      "skillFolderHash": "cd831565e7892d322398d8363637f2a6d01d6f24",
+      "skillFolderHash": "dc9c11902918c1d85ae1a18a4b2638c6eb6f7524",
       "installedAt": "2026-05-15T01:12:06.163Z",
-      "updatedAt": "2026-05-15T01:12:06.163Z"
+      "updatedAt": "2026-08-13T16:00:26.020Z"
     },
     "google-agents-cli-eval": {
       "source": "google/agents-cli",
       "sourceType": "github",
       "sourceUrl": "https://github.com/google/agents-cli.git",
       "skillPath": "skills/google-agents-cli-eval/SKILL.md",
-      "skillFolderHash": "32cd51da811385f0b5829871446f7402025205ae",
+      "skillFolderHash": "a1c12a383b5615c64c3e535856c33d48ac07b07d",
       "installedAt": "2026-05-15T01:12:06.167Z",
-      "updatedAt": "2026-05-15T01:12:06.167Z"
+      "updatedAt": "2026-08-13T16:00:28.754Z"
     },
     "google-agents-cli-observability": {
       "source": "google/agents-cli",
       "sourceType": "github",
       "sourceUrl": "https://github.com/google/agents-cli.git",
       "skillPath": "skills/google-agents-cli-observability/SKILL.md",
-      "skillFolderHash": "a6d91abe8b6011a35fcd66c1a3d9c038d2536d67",
+      "skillFolderHash": "795ea07573fec3cea9d78c9ae36c4fa3d37ad446",
       "installedAt": "2026-05-15T01:12:06.168Z",
-      "updatedAt": "2026-05-15T01:12:06.168Z"
+      "updatedAt": "2026-08-13T16:00:31.466Z"
     },
     "google-agents-cli-publish": {
       "source": "google/agents-cli",
       "sourceType": "github",
       "sourceUrl": "https://github.com/google/agents-cli.git",
       "skillPath": "skills/google-agents-cli-publish/SKILL.md",
-      "skillFolderHash": "70d657debb716cc701f46f6873b83c11d112255a",
+      "skillFolderHash": "8be9ee739fb5006761ee02786cdbc72c422ea85b",
       "installedAt": "2026-05-15T01:12:06.169Z",
-      "updatedAt": "2026-05-15T01:12:06.169Z"
+      "updatedAt": "2026-08-13T16:00:34.024Z"
     },
     "google-agents-cli-scaffold": {
       "source": "google/agents-cli",
       "sourceType": "github",
       "sourceUrl": "https://github.com/google/agents-cli.git",
       "skillPath": "skills/google-agents-cli-scaffold/SKILL.md",
-      "skillFolderHash": "9f0cc078abdba093942c5bc670ed4ef936be5b6a",
+      "skillFolderHash": "2bfbec99c972129f1e8a38ba2b7e3c4d79551639",
       "installedAt": "2026-05-15T01:12:06.170Z",
-      "updatedAt": "2026-05-15T01:12:06.170Z"
+      "updatedAt": "2026-08-13T16:00:36.618Z"
     },
     "google-agents-cli-workflow": {
       "source": "google/agents-cli",
       "sourceType": "github",
       "sourceUrl": "https://github.com/google/agents-cli.git",
       "skillPath": "skills/google-agents-cli-workflow/SKILL.md",
-      "skillFolderHash": "496dd116b493981e9dc54a97bfa8b5654ac6c59b",
+      "skillFolderHash": "f324551cbec07a0faeb433c9bd75515e848e158b",
       "installedAt": "2026-05-15T01:12:06.171Z",
-      "updatedAt": "2026-05-15T01:12:06.171Z"
+      "updatedAt": "2026-08-13T16:00:39.717Z"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
       "skillPath": "skills/find-skills/SKILL.md",
-      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
       "installedAt": "2026-05-15T01:12:11.670Z",
-      "updatedAt": "2026-05-27T22:18:03.791Z"
+      "updatedAt": "2026-08-13T16:00:41.183Z"
     },
     "positioning-messaging": {
       "source": "refoundai/lenny-skills",
@@ -90,6 +90,70 @@
       "skillFolderHash": "a840c9572a21b901a24cf3154c36ae76dc2dbd75",
       "installedAt": "2026-05-28T14:52:38.857Z",
       "updatedAt": "2026-05-28T14:52:38.857Z"
+    },
+    "google-cloud-recipe-auth": {
+      "source": "google/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/google/skills.git",
+      "skillPath": "skills/cloud/google-cloud-recipe-auth/SKILL.md",
+      "skillFolderHash": "a42449bc4dc3d411321e9aa63b8ea12c1e5eaa89",
+      "installedAt": "2026-08-13T16:06:35.299Z",
+      "updatedAt": "2026-08-13T16:07:14.398Z"
+    },
+    "google-cloud-recipe-onboarding": {
+      "source": "google/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/google/skills.git",
+      "skillPath": "skills/cloud/google-cloud-recipe-onboarding/SKILL.md",
+      "skillFolderHash": "2cbd6005aeb5689e716e3e8cde41ed630b3732ec",
+      "installedAt": "2026-08-13T16:06:38.655Z",
+      "updatedAt": "2026-08-13T16:07:17.395Z"
+    },
+    "agent-platform-deploy": {
+      "source": "google/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/google/skills.git",
+      "skillPath": "skills/cloud/agent-platform-deploy/SKILL.md",
+      "skillFolderHash": "961c63e165e0a5f53ebcdd4068a3c93daec4f0c3",
+      "installedAt": "2026-08-13T16:06:41.766Z",
+      "updatedAt": "2026-08-13T16:07:21.353Z"
+    },
+    "opentelemetry": {
+      "source": "grafana/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/grafana/skills.git",
+      "skillPath": "skills/grafana-core/opentelemetry/SKILL.md",
+      "skillFolderHash": "f35e97d855c6dba7530a7a8839f52fe23cc88544",
+      "pluginName": "grafana-core",
+      "installedAt": "2026-08-13T16:07:00.923Z",
+      "updatedAt": "2026-08-13T16:07:00.923Z"
+    },
+    "google-cloud-networking-observability": {
+      "source": "google/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/google/skills.git",
+      "skillPath": "skills/cloud/google-cloud-networking-observability/SKILL.md",
+      "skillFolderHash": "512d03e5a8eb8ce27a5619788bd8219b35ff7d92",
+      "installedAt": "2026-08-13T16:10:03.886Z",
+      "updatedAt": "2026-08-13T16:10:03.886Z"
+    },
+    "cloud-logging-configuration-basics": {
+      "source": "google/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/google/skills.git",
+      "skillPath": "skills/cloud/cloud-logging-configuration-basics/SKILL.md",
+      "skillFolderHash": "be0a8d5c47659c877534cd69843937bf93b55927",
+      "installedAt": "2026-08-13T16:10:07.225Z",
+      "updatedAt": "2026-08-13T16:10:07.225Z"
+    },
+    "pydantic": {
+      "source": "pydantic/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/pydantic/skills.git",
+      "skillPath": "skills/pydantic/SKILL.md",
+      "skillFolderHash": "f1f37134a952494dab6049c4174ff6875ce8989f",
+      "installedAt": "2026-08-13T16:10:09.989Z",
+      "updatedAt": "2026-08-13T16:10:09.989Z"
     }
   },
   "dismissed": {

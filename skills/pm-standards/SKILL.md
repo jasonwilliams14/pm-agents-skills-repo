@@ -1,12 +1,12 @@
 ---
 name: pm-standards
-description: Product Management standards and frameworks for Jason Williams. Use when drafting PRDs, prioritizing features, or analyzing product strategy to ensure alignment with "The Jason Standard" (POC-First, JTBD, RICE, OTEL-based metrics).
+description: Product Management standards and frameworks for Jason Williams. Use when drafting PRDs, prioritizing features, or analyzing product strategy to ensure alignment with "The PM Standard" (POC-First, JTBD, RICE, OTEL-based metrics).
 ---
 
 # PM Standards
 
 ## Overview
-This skill enforces the "Jason Standard" for Product Management, focusing on high-signal output, empirical validation through prototypes (POC-First), and rigorous prioritization.
+This skill enforces the "PM Standard" for Product Management, focusing on high-signal output, empirical validation through prototypes (POC-First), and rigorous prioritization.
 
 ## Core Philosophy: POC-First
 Every proposal must conclude with a Value Proposition and Competitive Differentiation. Documentation should ideally be born from functional prototypes or clear technical feasibility studies.

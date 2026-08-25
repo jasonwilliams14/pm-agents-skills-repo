@@ -1,264 +1,275 @@
 {
   "ai-engineer": [
-    "local LLM",
     "Ollama",
-    "llama.cpp",
-    "LLM integration",
     "agentic ai",
+    "llama.cpp",
+    "PoC",
+    "LangChain",
+    "local LLM",
     "MCP",
+    "LLM integration",
     "ai-dev",
     "ai-engineer",
-    "agentic workflows",
-    "ML Ops",
-    "PoC",
     "crewai",
-    "LangChain"
+    "agentic workflows"
+  ],
+  "ai-platform-pm": [
+    "platform conformance",
+    "deployment model",
+    "AI portfolio",
+    "ai-platform-pm",
+    "unit of value",
+    "shared services",
+    "product onboarding",
+    "cross-product",
+    "platform standards",
+    "conformance review",
+    "platform-pm"
   ],
   "ai-security-patterns": [
-    "PII leakage",
-    "ai-sec",
     "jailbreak",
-    "ai-security-patterns",
-    "OWASP LLM",
+    "ai-sec",
     "BOLA",
+    "shadow api",
+    "OWASP LLM",
+    "adversarial",
     "prompt injection",
     "guardrails",
-    "shadow api",
-    "adversarial"
+    "ai-security-patterns",
+    "PII leakage"
   ],
   "defuddle": [
-    "simplify web content",
     "scrape",
+    "simplify web content",
     "defuddle",
     "extract",
     "clean markdown"
   ],
   "docs-agent": [
     "documentation",
-    "update readme",
-    "docs-agent",
-    "write docs",
     "technical writing",
-    "engineer handoff"
+    "write docs",
+    "engineer handoff",
+    "update readme",
+    "docs-agent"
   ],
   "find-skills": [
     "how to do X",
-    "find-skills",
     "discover capability",
+    "find-skills",
     "what skill"
   ],
   "google-agents-cli-adk-code": [
-    "adk-code",
     "ADK callbacks",
-    "google-agents-cli-adk-code",
     "ADK python",
-    "agent tool definition"
+    "agent tool definition",
+    "google-agents-cli-adk-code",
+    "adk-code"
   ],
   "google-agents-cli-deploy": [
-    "GKE agent deployment",
+    "Cloud Run agent",
     "deploy agent",
     "google-agents-cli-deploy",
-    "Cloud Run agent",
+    "GKE agent deployment",
     "adk-deploy"
   ],
   "google-agents-cli-eval": [
+    "google-agents-cli-eval",
+    "trajectory scoring",
     "adk-eval",
     "LLM-as-judge",
-    "trajectory scoring",
-    "google-agents-cli-eval",
-    "agent evaluation",
-    "evalset"
+    "evalset",
+    "agent evaluation"
   ],
   "google-agents-cli-observability": [
-    "prompt-response logging",
-    "Cloud Trace",
-    "google-agents-cli-observability",
     "adk-obs",
-    "agent analytics"
+    "Cloud Trace",
+    "agent analytics",
+    "google-agents-cli-observability",
+    "prompt-response logging"
   ],
   "google-agents-cli-publish": [
-    "A2A registration",
-    "adk-publish",
-    "Gemini Enterprise publication",
     "google-agents-cli-publish",
+    "A2A registration",
+    "Gemini Enterprise publication",
+    "adk-publish",
     "register agent"
   ],
   "google-agents-cli-scaffold": [
-    "start new ADK project",
+    "adk-scaffold",
     "scaffold agent",
+    "start new ADK project",
     "create agent project",
-    "google-agents-cli-scaffold",
-    "adk-scaffold"
+    "google-agents-cli-scaffold"
   ],
   "google-agents-cli-workflow": [
     "agent development lifecycle",
-    "agent debugging",
-    "adk-workflow",
+    "ADK coding guidelines",
     "google-agents-cli-workflow",
-    "ADK coding guidelines"
+    "adk-workflow",
+    "agent debugging"
   ],
   "json-canvas": [
-    "nodes and edges",
     "canvas layout",
+    "nodes and edges",
     "visual mind map",
-    "json-canvas",
     "canvas-files",
-    ".canvas"
+    ".canvas",
+    "json-canvas"
   ],
   "k8s-ai-expert": [
     "KV cache",
-    "KEDA",
+    "vLLM deployment",
     "ML workloads on K8s",
-    "kserve",
-    "gateway inference extensions",
+    "KEDA",
+    "k8s-ai-expert",
     "GPU scheduling",
-    "scaling AI pods",
-    "vLLM deployment"
+    "scaling AI pods"
   ],
   "k8s-engineer": [
-    "K8s troubleshooting",
-    "fluxcd",
-    "cluster networking",
     "k3d",
-    "Ingress",
-    "volume mounts",
+    "argocd",
     "node affinity",
-    "vcluster",
+    "K8s troubleshooting",
     "pod scheduling",
     "k8s-sme",
-    "k8s-engineer",
+    "cluster networking",
     "multi cluster",
-    "argocd"
+    "fluxcd",
+    "vcluster",
+    "k8s-engineer",
+    "volume mounts",
+    "Ingress"
   ],
   "k8s-gateway-api": [
-    "GatewayClass",
-    "Gateway API design",
-    "k8s-gateway-api",
-    "KGateway",
-    "ReferenceGrant",
-    "agentgateway",
     "HTTPRoute",
-    "GRPCRoute"
+    "k8s-gateway-api",
+    "GRPCRoute",
+    "GatewayClass",
+    "KGateway",
+    "Gateway API design",
+    "ReferenceGrant",
+    "agentgateway"
   ],
   "k8s-gateway-inference": [
+    "k8s-gateway-inference",
+    "InferencePool",
     "Gateway Inference Extensions",
     "LLM load balancing",
-    "k8s-gateway-inference",
-    "InferenceModel",
-    "InferencePool",
-    "model routing"
+    "model routing",
+    "InferenceModel"
   ],
   "k8s-observability-ops": [
+    "RED metrics",
+    "Jaeger",
     "observability-ops",
-    "otel-ops",
-    "tracing",
     "ServiceMonitor",
     "Grafana",
-    "Jaeger",
     "OpenTelemetry",
+    "otel-ops",
     "Prometheus",
-    "RED metrics"
+    "tracing"
   ],
   "nginx-patterns": [
+    "SSE streaming",
     "proxy buffering",
-    "upstream retries",
-    "NGF",
     "nginx-sme",
-    "nginx-patterns",
+    "upstream retries",
     "L7 tuning",
     "nginx-config",
+    "nginx-patterns",
     "agentic routing",
-    "SSE streaming"
+    "NGF"
   ],
   "obsidian-bases": [
+    "obsidian formulas",
     "obsidian-bases",
     "note filters",
     "database-like views",
-    ".base files",
-    "obsidian formulas"
+    ".base files"
   ],
   "obsidian-cli": [
     "obsidian-cli",
-    "vault tasks",
+    "obsidian automation",
     "reload plugins",
-    "search vault",
-    "obsidian automation"
+    "vault tasks",
+    "search vault"
   ],
   "obsidian-markdown": [
+    "embeds",
+    "properties",
     "markdown frontmatter",
     "wikilinks",
-    "callouts",
-    "properties",
     "obsidian-markdown",
-    "embeds"
+    "callouts"
   ],
   "platform-engineer": [
+    "K8s admin",
+    "platform-engineer",
+    "platform engineering",
+    "AKS",
     "infrastructure",
     "cloud provisioning",
-    "platform-engineer",
-    "EKS",
-    "AKS",
-    "platform engineering",
     "GKE",
-    "K8s admin"
+    "EKS"
   ],
   "pm-standards": [
-    "OTEL PM metrics",
-    "JTBD",
     "Jason Standard",
+    "OTEL PM metrics",
     "pm-standards",
+    "JTBD",
     "RICE prioritization"
   ],
   "positioning-messaging": [
-    "positioning-messaging",
+    "value prop",
     "market positioning",
-    "launch copy",
+    "positioning-messaging",
     "competitor messaging",
-    "value prop"
+    "launch copy"
   ],
   "prd-generator": [
     "PRD creation",
     "prd-generator",
-    "PRD template",
-    "product requirements document"
+    "product requirements document",
+    "PRD template"
   ],
   "python-dev-standard": [
-    "clean python",
+    "Pydantic",
     "Google-style docstrings",
     "async code",
+    "clean python",
     "python-dev-standard",
-    "Pydantic",
     "type hinting"
   ],
   "slide-deck-creator": [
     "presentation outline",
-    "powerpoint",
     "slide-deck-creator",
-    "doc-to-slides",
+    "pitch deck",
     "slide deck",
-    "pitch deck"
+    "doc-to-slides",
+    "powerpoint"
   ],
   "tech-pm": [
-    "feature scoping",
-    "product-strategy",
-    "prioritization",
     "roadmap",
-    "tech-pm",
-    "architectural strategy"
+    "prioritization",
+    "product-strategy",
+    "feature scoping",
+    "architectural strategy",
+    "tech-pm"
   ],
   "value-proposition": [
     "competitive advantage",
+    "customer value delivery",
     "JTBD value prop",
-    "value-proposition",
-    "customer value delivery"
+    "value-proposition"
   ],
   "vcluster-dev": [
     "local K8s testing",
-    "lightweight K8s",
-    "rapid cluster iteration",
-    "vcluster",
+    "vcluster-dev",
     "multi-cluster testing",
     "virtual cluster",
-    "vcluster-dev"
+    "lightweight K8s",
+    "rapid cluster iteration",
+    "vcluster"
   ]
 }

@@ -6,121 +6,73 @@ description: >
   "use state management", or needs ADK (Agent Development Kit) Python API patterns
   and code examples. Part of the Google ADK skills suite.
   It provides a quick reference for agent types, tool definitions, orchestration
-  patterns, callbacks, and state management.
-  Do NOT use for creating new projects (use google-agents-cli-scaffold) or deployment
+  patterns, callbacks, state management, and reference recipes to study.
+  Do NOT use for scaffolding (use google-agents-cli-scaffold) or deployment
   (use google-agents-cli-deploy).
 metadata:
   author: Google
   license: Apache-2.0
-  version: 0.1.3
+  version: 1.3.1
   requires:
     bins:
       - agents-cli
     install: "uv tool install google-agents-cli"
 ---
 
-# ADK Cheatsheet
+# ADK Code Reference
 
-> **Before using this skill**, activate `/google-agents-cli-workflow` first — it contains the required development phases and scaffolding steps.
+Activate `/google-agents-cli-workflow` first for required development phases and scaffolding steps.
 
-## Prerequisites
+## 1. Study Recipes (No Project Needed)
 
-1. Run `agents-cli info` — if it shows project config, skip to the cheatsheet below
-2. If no project exists: run `agents-cli scaffold create <name>`
-3. If user has existing code: run `agents-cli scaffold enhance .`
+**Read the topic index in `references/samples.md` before answering "how do I build X".** Worked implementations exist for: sandboxed/per-user code execution, agent-loadable `SKILL.md` skills, cross-session memory, approval gates before risky actions, tool guardrails, per-user credentials, and scheduled/event-driven runs.
+
+The index only gives you a name; the recipe is the code. Clone it and read its `AGENTS.md` before you implement anything it covers. Hand-writing a Docker or E2B sandbox wrapper, a skill loader, a moderation callback or a memory store — for a capability the index lists — means you stopped at the name.
+
+## 2. Prerequisites for Writing Code
 
 Do NOT write agent code until a project is scaffolded.
 
-> **Python only for now.** This cheatsheet currently covers the Python ADK SDK.
-> Support for other languages is coming soon.
+1. Verify project: run `agents-cli info` (proceed if config exists).
+2. New project: run `agents-cli scaffold create <name>`.
+3. Existing code: run `agents-cli scaffold enhance .`.
+
+> **Language Support:** This reference covers the Python ADK SDK. Support for other languages coming soon.
 
 ## Quick Reference — Most Common Patterns
 
-### Agent Creation
-
 ```python
 from google.adk.agents import Agent
-
-root_agent = Agent(
-    name="my_agent",
-    model="gemini-flash-latest",
-    instruction="You are a helpful assistant that ...",
-    tools=[my_tool],
-)
-```
-
-> **NEVER change an existing agent's `model=` value unless the user explicitly asks.** If a Gemini model returns a 404, it's almost always a `GOOGLE_CLOUD_LOCATION` issue — run the listing command to verify availability before changing anything. For model docs, fetch `https://adk.dev/agents/models/google-gemini/index.md`.
-> ```bash
-> uv run --with google-genai python -c "
-> from google import genai
-> client = genai.Client(vertexai=True, location='global')
-> for m in client.models.list(): print(m.name)
-> "
-> ```
-
-### Basic Tool
-
-```python
-from google.adk.tools import FunctionTool
 
 def get_weather(city: str) -> dict:
     """Get current weather for a city."""
     return {"city": city, "temp": "22°C", "condition": "sunny"}
 
-weather_tool = FunctionTool(func=get_weather)
-```
-
-> **ADK built-in tool imports:** Import the tool instance, not the module.
-> ```python
-> from google.adk.tools.load_web_page import load_web_page  # CORRECT
-> from google.adk.tools import load_web_page                 # WRONG
-> ```
-
-### Simple Callback
-
-```python
-from google.adk.agents.callback_context import CallbackContext
-
-async def initialize_state(callback_context: CallbackContext) -> None:
-    state = callback_context.state
-    if "history" not in state:
-        state["history"] = []
-
 root_agent = Agent(
     name="my_agent",
-    model="gemini-flash-latest",
-    instruction="...",
-    before_agent_callback=initialize_state,
+    model="gemini-3.6-flash",
+    instruction="You are a helpful assistant that ...",
+    tools=[get_weather],
 )
 ```
+
 ---
 
-## Reference Files
+## References
 
-| File | When to read |
+Use cheatsheets for common patterns. For deep knowledge, fetch the docs index or inspect the installed package.
+
+| Reference | When to read |
 |------|-------------|
-| `references/adk-python.md` | ADK Python API — agents, tools, callbacks, plugins, state, artifacts, context caching, session rewind |
-| `references/adk-2.0.md` | **ADK 2.0 Workflow API (experimental pre-GA, opt-in)** — graph-based workflows, nodes, edges, HITL, parallel processing |
-
-### ADK 2.0 Workflows — Opt-in
-
-> **The Workflow API is experimental, pre-GA (ADK 2.0).** Do NOT recommend it by default.
->
-> **Before suggesting workflow patterns**, explain the following to the user and ask if they want to proceed:
->
-> 1. **What it is**: ADK 2.0 introduces a graph-based Workflow API — nodes (functions, LLM agents, tools) connected by edges with conditional routing, fan-out/fan-in parallelism, and human-in-the-loop interrupts.
-> 2. **When it helps**: Complex multi-step pipelines needing deterministic control flow, parallel processing of list items, structured approval gates, or retry logic — cases where SequentialAgent/ParallelAgent/LoopAgent feel limiting.
-> 3. **Risks**: Pre-GA — APIs may change before GA. Requires `google-adk >= 2.0.0` and **Python >= 3.11**. Incompatible with Live Streaming. Scaffolded projects need `pyproject.toml` changes before upgrade — see the reference file for step-by-step instructions.
->
-> **Only read `references/adk-2.0.md` after the user explicitly opts in.** If they decline or are unsure, use the standard ADK 1.x orchestration patterns from `references/adk-python.md` (SequentialAgent, ParallelAgent, LoopAgent, BaseAgent).
-
-## ADK Documentation
-
-For the ADK docs index (titles and URLs for fetching documentation pages), use `curl https://adk.dev/llms.txt`.
+| `references/samples.md` | **Topic-indexed catalog of ADK reference recipes.** Read in workflow Phase 1 — before scaffolding and before writing code — maps a capability to the recipe that implements it. |
+| `references/adk-python.md` | Core ADK API: `Agent`, tools, callbacks, plugins, state, artifacts, multi-agent systems, `SequentialAgent` / `ParallelAgent` / `LoopAgent`, custom `BaseAgent`, `ManagedAgent` (server-hosted first-party agents), A2A protocol, A2UI. Default for most agents. |
+| `references/adk-workflows.md` | Graph-based Workflow API (ADK 2.0): nodes, edges, fan-out/fan-in, HITL, parallel processing. Use when you need explicit graph topology. |
+| `curl https://adk.dev/llms.txt` | Docs index (every page title + URL). Fetch it, then `WebFetch` the specific page for anything beyond the cheatsheets. |
+| Installed ADK package | Exact signatures and symbols — inspect the source (see "Inspecting ADK Source Code" in `references/adk-python.md`). |
 
 ## Related Skills
 
 - `/google-agents-cli-workflow` — Development workflow, coding guidelines, and operational rules
 - `/google-agents-cli-scaffold` — Project creation and enhancement with `agents-cli scaffold create` / `scaffold enhance`
-- `/google-agents-cli-eval` — Evaluation methodology, evalset schema, and the eval-fix loop
+- `/google-agents-cli-eval` — Evaluation methodology, dataset schema, and the eval-fix loop
 - `/google-agents-cli-deploy` — Deployment targets, CI/CD pipelines, and production workflows
