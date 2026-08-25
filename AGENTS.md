@@ -1,145 +1,165 @@
 # AGENTS.md — Global Engineering Guardrails
 
+> **This is the single global entry point for the agentic skill system.** Tool-specific config (e.g., `~/.claude/CLAUDE.md`) handles identity and tool-specific settings.
+
+---
+
 ## 1. Judgment Boundaries (Three-Tier Enforcement)
 
 ### NEVER
-* **Destructive Operations:** Never delete files, directories, or git branches without explicit user confirmation.
-* **Unverified Commits:** Never commit, stage, or push code changes without successfully running the workspace test runner/linter first.
-* **Legacy Assets:** Never install deprecated libraries or legacy dependencies.
-* **File Overwrites:** Never overwrite configuration files outside your designated operational scope.
+- **Destructive Operations:** Never delete files, directories, or git branches without explicit user confirmation.
+- **Unverified Commits:** Never commit, stage, or push code changes without successfully running the workspace test runner/linter first.
+- **Legacy Assets:** Never install deprecated libraries or legacy dependencies.
+- **File Overwrites:** Never overwrite configuration files outside your designated operational scope.
 
 ### ASK
-* **High-Risk Changes:** Stop and ask for confirmation before executing refactors, network security changes, or cluster state modifications.
-* **Ambiguity:** Ask for clarification if a task instruction conflicts with existing workspace configurations or schemas.
+- **High-Risk Changes:** Stop and ask before executing refactors, network security changes, or cluster state modifications.
+- **Ambiguity:** Ask for clarification if a task instruction conflicts with existing workspace configurations or schemas.
 
 ### ALWAYS
-* **Verification Loop:** Always execute the workspace linter and test suite before declaring a coding task complete.
-* **Standardized Diagrams:** Always render structural, temporal, or workflow visuals using **Mermaid.js** syntax blocks.
-* **Immutable Docs:** Always capture architectural decisions and technical documentation inside the `docs/` directory using strictly formatted Markdown (`.md`).
-* **Skill Delegation:** Always check `~/.agents/skills/` for a specialized capability before attempting a complex, multi-step workflow.
-* **Codebase Traversal:** Always use grep or specific regex searches to locate target code blocks before opening a file.
-* **File Inspection Limits:** Never read more than 150 lines of code in a single file unless inspecting a complete logic flow is strictly required.
-
-
-## Git & Collaboration
-* **Branching Strategy:** Create atomic feature/fix branches (e.g., `feature/add-dynamic-routing` or `fix/nginx-timeout`). Never commit directly to `main` or `master`.
-* **Commit/PR Guidelines:** Write structured semantic commit messages (e.g., `feat:`, `fix:`, `docs:`, `chore:`). Keep pull requests tightly scoped and describe all code changes alongside manual testing steps.
+- **Verification Loop:** Always execute the workspace linter and test suite before declaring a coding task complete.
+- **Mermaid Diagrams:** Always render structural, temporal, or workflow visuals using Mermaid.js syntax blocks (not ASCII art, not external tools).
+- **Immutable Docs:** Always capture architectural decisions and technical documentation in `docs/` using Markdown.
+- **Skill Delegation:** Always check `~/.agents/skills/` for a specialized capability before attempting a complex, multi-step workflow.
+- **Codebase Traversal:** Always use grep or regex to locate target code blocks before opening a file. Never read more than 150 lines of a single file unless inspecting a complete logic flow is strictly required.
 
 ---
 
-## 2. Universal Toolchain Context
+## 2. Universal Toolchain
 
 | Domain | Allowed Frameworks & Tools | Execution Constraint |
-| :--- | :--- | :--- |
+|:---|:---|:---|
 | **Languages** | Python, Node.js, TypeScript | Default to Python for AI PoCs. Enforce strict typing in TS/Python. |
-| **Infrastructure** | k3d, kind, docker, vcluster | GCP for GKE kubernetes clusters. |
-| **DevOps** | github actions, gitlab ci, helm | Use GitHub Actions by default for standard workflows. |
-| **Kubernetes/GitOps** | kubectl, fluxcd, helm | Treat cluster state as read-only for diagnostics. Use Flux for state mutation. |
-| **Observability** | OpenTelemetry (otel) | Instrument logs and traces on all new kubernetes/gateway/agentic infrastructure. |
+| **Python** | Python 3.12+, Pydantic v2 | Mandatory OTEL instrumentation — no POC is complete without traces/metrics. |
+| **Kubernetes** | Gateway API v1.1+, Inference Extensions | Prefer Gateway API over legacy Ingress. Use `InferencePool`, `InferenceModel` for AI workloads. |
+| **Infrastructure** | vcluster, k3d, kind, Docker, Docker Compose | Priority order: vcluster > k3d > kind > Docker. GCP for GKE clusters. |
+| **DevOps** | GitHub Actions, GitLab CI, Helm | Use GitHub Actions by default. |
+| **K8s/GitOps** | kubectl, FluxCD, Helm | Treat cluster state as read-only for diagnostics. Use Flux for state mutation. |
+| **Observability** | OpenTelemetry, Prometheus, Grafana | Instrument logs and traces on all new kubernetes/gateway/agentic infrastructure. |
+| **Stack defaults** | Python + NGINX NJS + CrewAI/LangGraph | For agentic patterns. |
+| **IDE** | VS Code, Zed, Antigravity | Shell: ZSH (no profile requirements). |
 
 ---
 
-## 3. Context Loading Protocol (MANDATORY FOR CLAUDE)
+## 3. Documentation & Communication
 
-**This section enforces the agentic workflow system. Claude MUST execute this protocol before responding to ANY task in this workspace or in child workspaces that reference ~/.agents/.**
+### Three-Part Structure
+All strategic docs and PRDs use separate versions for different audiences:
+- **Executive version** — Value proposition, risk, business impact, timeline
+- **Product version** — User outcomes, feature scope, success metrics
+- **Engineering version** — Technical logic, constraints, implementation details, testing strategy
 
-### The Protocol: Five-Step Context Load
+### Locations
+- **Code:** GitHub (code repos), GitLab (pipelines)
+- **Strategic docs:** Confluence
+- **Project docs:** `docs/` folder (ADRs, design docs, technical specs)
+- **Personal research:** Obsidian vault (not shared/published)
 
-Claude shall load local context in this exact order:
+### Templates
+- **ADRs:** `~/.agents/templates/architecture-decision-record.md`
+- **Design Docs:** `~/.agents/templates/technical-design-doc.md`
 
-1. **Local AGENTS.md** (judgment boundaries & toolchain) — Load FIRST, always
-2. **Local CLAUDE.md** (standards, owner context, skill system) — Load SECOND, always
-3. **dispatcher.yaml** (intent → skill sequence pipelines) — Load if present; match request intent
-4. **RULES.md** (orchestration & execution rules) — Reference for agentic decision-making
-5. **.skills_manifest.json** (skill registry, semantic triggers) — Load for skill discovery & composition
+### Communication Style
+- Formal writing with quality prose. Visual emphasis: Mermaid diagrams for all architecture, workflows, decision flows.
+- Executive summaries first, detail second. No jargon unless explained.
 
-### Execution Checkpoint: Before Responding
+---
 
-Claude MUST perform this checkpoint explicitly:
+## 4. Deployment & Operations
 
-```
-1. Scan current working directory for local AGENTS.md
-   ✓ If exists → Load immediately (overrides global rules)
-   ✗ If missing → Note: "No local AGENTS.md, using global rules from ~/.agents/"
+- **Deployment:** Canary deployments, traffic splitting, progressive rollouts, automated rollbacks. Primary platform: Kubernetes with GitOps (FluxCD/ArgoCD).
+- **Local testing:** vcluster (preferred) → k3d → kind → Docker Compose. Always test locally before proposing to engineering.
+- **Multi-cloud:** Follow Kubernetes and GitOps best practices across GCP, AWS, Azure.
 
-2. Scan current working directory for local CLAUDE.md
-   ✓ If exists → Load immediately (overrides ~/.claude/CLAUDE.md)
-   ✗ If missing → Note: "No local CLAUDE.md, using global standards"
+---
 
-3. Scan current working directory for dispatcher.yaml
-   ✓ If exists → Match user request intent against pipelines
-   ✗ If missing → Fall back to semantic skill lookup in .skills_manifest.json
+## 5. Skill System (`~/.agents/`)
 
-4. Load RULES.md
-   → Reference Rule 34 (Retrieval Strategy Hierarchy)
-   → Reference Rule 6 (Dispatcher Execution Logic)
-   → Reference Rule 56 (Template Enforcement)
+The global `~/.agents/` directory is a JIT (Just-in-Time) skill dispatcher for specialized tasks.
 
-5. Load .skills_manifest.json (grep for semantic triggers)
-   → Use this for skill discovery ONLY if no dispatcher pipeline matches
-```
+### Principles
+- **Efficiency first, then thoroughness:** Prioritize the most efficient skill for the task, then consider thorough approaches.
+- **Skill recommendations:** Recommend new skills as needed — don't force existing skills.
+- **Retry logic:** If skill output is weak, retry 1–2 times with adjusted prompt, then escalate to the user.
+- **Trust level:** All skills equally trusted (no beta/experimental tiers).
+- **Composition limit:** Maximum 1 primary + 2 secondary skills per execution tree.
+- **Subagent returns:** Compress into structured YAML summary before returning to parent.
 
-### Show Your Reasoning (Transparency)
+### Context Loading
 
-After loading context, Claude MUST explicitly communicate:
+When a project references `~/.agents/`:
+1. Load the project's `AGENTS.md` first (local overrides global).
+2. Load this file (`~/.agents/AGENTS.md`) for judgment boundaries and toolchain.
+3. Reference `~/.claude/CLAUDE.md` for owner context, identity, and philosophy.
+4. Match task intent against `dispatcher.yaml` (local) then `~/.agents/dispatcher.yaml` (global).
+5. Load relevant skill(s) from `~/.agents/skills/` when the task matches.
 
-```
-📋 Local context loaded:
-  ✓ AGENTS.md found (loading judgment boundaries)
-  ✓ CLAUDE.md found (loading standards)
-  ✓ dispatcher.yaml found (checking for matching pipeline)
+If a project has no `AGENTS.md`, fall back to these global rules. Note which files you're using.
 
-🔍 Intent matching:
-  Your request: "[user task]"
-  Dispatcher pipeline: [matched-pipeline-name] or "No match, using semantic skill lookup"
-  Recommended skills: [skill-1] → [skill-2] → [skill-3]
-  Skill composition limit: 1 primary + 2 secondary (per CLAUDE.md Rule 154-157)
-  Affected templates: [template-name.md]
-```
+### Dispatcher Pipelines (Global)
 
-### Failure Modes (Stop and Ask)
+| Pipeline | Steps |
+|----------|-------|
+| `cluster-lifecycle` | K8s provisioning + FluxCD bootstrap + Prometheus/Grafana |
+| `ai-gateway-deployment` | GatewayClass/HTTPRoute → InferencePool → NGINX tuning → tracing |
+| `agentic-routing-poc` | AI agentic logic → L7 routing → OTEL tracing → ADR handoff |
+| `cluster-troubleshooting` | Diagnostics → root cause → remediation → post-mortem |
+| `product-definition` | Strategic intent → JTBD → RICE → PRD → exec slides |
 
-If Claude cannot load context:
+See `~/.agents/dispatcher.yaml` for full definitions. `~/.agents/USAGE.md` for quick-start skill lookup.
 
-```
-❌ Context loading failed:
-  - Local AGENTS.md not found (required for judgment boundaries)
-  - dispatcher.yaml not readable (required for intent routing)
-  - .skills_manifest.json not found (required for skill discovery)
-
-→ STOP. Ask user: "Does this workspace have a local AGENTS.md? Should I use global ~/.agents/ rules?"
-```
-
-### For Child Workspaces (Multi-Repo Strategy)
-
-When a project repo contains a local AGENTS.md or CLAUDE.md that references ~/.agents/:
-
-```
-# child-project/AGENTS.md
-This project inherits from ~/.agents/:
-- Use judgment boundaries from parent AGENTS.md
-- Use skill system from parent CLAUDE.md
-- Use dispatcher pipelines from parent dispatcher.yaml
-- Use skills from parent ~/.agents/skills/
-
-Local overrides: [none, or list specific overrides]
-```
-
-Claude shall:
-1. Load child workspace AGENTS.md/CLAUDE.md FIRST (Rule 34: local overrides)
-2. Then fall back to ~/.agents/ for referenced files
-3. Merge local + global rules (child takes precedence)
-
-### Validation: Run Before Declaring Task Complete
-
-Before declaring a task complete, Claude shall:
+### Validation
 
 ```bash
 python3 ~/.agents/validate-skills.py --strict
 ```
 
-This validates:
-- Dispatcher pipelines reference valid skills
-- Templates referenced in pipeline steps exist
-- No semantic trigger collisions
-- Adopted status consistent with pipeline membership
+Validates: dispatcher pipelines reference valid skills, templates exist, no semantic trigger collisions, adopted status consistent.
+
+---
+
+## 6. Git & Collaboration
+
+- **Branching:** Atomic feature/fix branches (`feature/add-dynamic-routing`, `fix/nginx-timeout`). Never commit to `main`/`master` directly.
+- **Commits:** Semantic messages (`feat:`, `fix:`, `docs:`, `chore:`, `test:`). Include manual testing steps in PRs, link related issues.
+- **Code quality:** Run linter and test suite before declaring tasks complete. Type hints mandatory. `ruff` for Python, `pytest` for tests.
+- **Architecture:** API-first designs, streaming-aware (SSE, WebSockets), infrastructure-as-code (Terraform, Helm, FluxCD).
+
+---
+
+## 7. IP & Publishing
+
+- **Internal:** Git-focused, all work versioned in private repos.
+- **Personal:** Blog posts, articles, public research (competitive, technical analysis).
+- **Competitive analysis:** Yes — conduct and document competitive research and differentiation.
+
+---
+
+## 8. For Child Workspaces (Multi-Repo Strategy)
+
+When a project repo contains a local `AGENTS.md` that references `~/.agents/`:
+
+```markdown
+# child-project/AGENTS.md
+This project inherits from ~/.agents/:
+- Use judgment boundaries from ~/.agents/AGENTS.md
+- Use skill system from ~/.agents/skills/
+- Use dispatcher pipelines from ~/.agents/dispatcher.yaml
+
+Local overrides: [none, or list specific overrides]
+```
+
+Load child workspace `AGENTS.md` first (local takes precedence), then fall back to `~/.agents/` for referenced files.
+
+---
+
+## References
+
+- **Skill System:** `~/.agents/skills/`, `~/.agents/.skills_manifest.json`
+- **Execution Rules:** `~/.agents/RULES.md`
+- **Quick-Start Lookup:** `~/.agents/USAGE.md`
+- **Dispatcher Pipelines:** `~/.agents/dispatcher.yaml`
+- **Templates:** `~/.agents/templates/`
+- **Skill Maintenance:** `~/.agents/SKILL_MAINTENANCE.md`
+- **Owner Context & Philosophy:** `~/.claude/CLAUDE.md`
+- **Validation:** `python3 ~/.agents/validate-skills.py --strict`
