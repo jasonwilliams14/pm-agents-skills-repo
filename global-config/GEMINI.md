@@ -39,3 +39,10 @@ Documentation is born from functional prototypes. Proposals should focus on clea
 - API Security: Prioritize BOLA and Shadow API discovery.
 - AI Gateway: Focus on "Cost of Thinking" (Rate-limiting, KV cache).
 - ADRs: Provide abbreviated Architectural Decision Records for major shifts.
+
+## Agentic Workflow: Session Initialization & Lazy Discovery
+- **Location:** Global skills, workflows, and rules reside in `~/.agents/`.
+- **First-Turn Scan:** On the first turn of every session, always search `~/.agents/.skills_manifest.json` for trigger keywords matching the user request.
+- **Hydration:** If a matching skill (such as `k8s-gateway-inference` or `ai-security-patterns`) is identified, read its `SKILL.md` file from `~/.agents/skills/<name>/` before generating design specifications or writing code.
+- **Template Conformance:** Prior to outputting any design specs, reports, or logs, verify the `preferred_templates` configuration for loaded skills and adhere to the structural patterns found in `~/.agents/templates/`.
+

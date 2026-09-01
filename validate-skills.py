@@ -28,6 +28,9 @@ DISPATCHER_PATH = AGENTS_HOME / "dispatcher.yaml"
 TEMPLATES_DIR = AGENTS_HOME / "templates"
 SKILLS_DIR = AGENTS_HOME / "skills"
 LOOKUP_INDEX_PATH = AGENTS_HOME / ".skills_lookup_index.json"
+# Claude Code discovers user-level skills only here; this path must resolve
+# to (or fully mirror) SKILLS_DIR for skills to be loadable by Claude.
+CLAUDE_SKILLS_PATH = Path.home() / ".claude" / "skills"
 
 # Color output
 RED = "\033[91m"
@@ -107,7 +110,7 @@ class SkillValidator:
 
     def check_manifest_integrity(self) -> None:
         """Validate each skill in manifest."""
-        print(f"\n{BLUE}[1/5] Checking manifest integrity...{RESET}")
+        print(f"\n{BLUE}[1/6] Checking manifest integrity...{RESET}")
 
         if not self.manifest:
             self.errors.append("Manifest is empty or failed to load")
@@ -156,7 +159,7 @@ class SkillValidator:
 
     def check_dispatcher_integrity(self) -> None:
         """Validate dispatcher pipelines reference valid skills."""
-        print(f"{BLUE}[2/5] Checking dispatcher pipelines...{RESET}")
+        print(f"{BLUE}[2/6] Checking dispatcher pipelines...{RESET}")
 
         if not self.dispatcher:
             self.warnings.append("Dispatcher is empty or failed to load")
@@ -201,7 +204,7 @@ class SkillValidator:
 
     def check_semantic_trigger_collisions(self) -> None:
         """Check for duplicate semantic triggers across skills."""
-        print(f"{BLUE}[3/5] Checking for semantic trigger collisions...{RESET}")
+        print(f"{BLUE}[3/6] Checking for semantic trigger collisions...{RESET}")
 
         all_triggers: Dict[str, str] = {}
         collision_count = 0
@@ -226,7 +229,7 @@ class SkillValidator:
 
     def validate_adopted_status_consistency(self) -> None:
         """Warn if active skills not in pipelines, or maintained skills are in pipelines."""
-        print(f"{BLUE}[4/5] Checking adopted_status consistency...{RESET}")
+        print(f"{BLUE}[4/6] Checking adopted_status consistency...{RESET}")
 
         active_skills: Set[str] = {
             name
@@ -253,13 +256,68 @@ class SkillValidator:
         if not unused_active:
             print(f"  {GREEN}✓ All active skills are used in dispatcher pipelines{RESET}")
 
+    def check_platform_exposure(self) -> None:
+        """Check that ~/.claude/skills exposes every skill in SKILLS_DIR.
+
+        Claude Code only discovers user-level skills under ~/.claude/skills,
+        so that path must resolve to (or fully mirror) the canonical
+        SKILLS_DIR. This catches silent drift where a skill exists in
+        ~/.agents/skills but is invisible to Claude.
+        """
+        print(f"{BLUE}[5/6] Checking Claude Code skill exposure...{RESET}")
+
+        if not CLAUDE_SKILLS_PATH.exists():
+            self.errors.append(
+                f"Claude Code skills path missing: {CLAUDE_SKILLS_PATH} — "
+                f"create it as a symlink to {SKILLS_DIR}"
+            )
+            return
+
+        # Preferred layout: the whole path is one symlink to the canonical dir
+        if CLAUDE_SKILLS_PATH.is_symlink():
+            target = CLAUDE_SKILLS_PATH.resolve()
+            if target == SKILLS_DIR.resolve():
+                print(
+                    f"  {GREEN}✓ {CLAUDE_SKILLS_PATH} -> {SKILLS_DIR} "
+                    f"({self._count_skills()} skills exposed){RESET}"
+                )
+            else:
+                self.errors.append(
+                    f"{CLAUDE_SKILLS_PATH} symlinks to {target}, "
+                    f"expected {SKILLS_DIR}"
+                )
+            return
+
+        # Legacy layout: real dir of per-skill symlinks — check full coverage
+        missing = [
+            s.name
+            for s in SKILLS_DIR.iterdir()
+            if s.is_dir() and not (CLAUDE_SKILLS_PATH / s.name).exists()
+        ]
+        if missing:
+            self.errors.append(
+                f"{CLAUDE_SKILLS_PATH} is not a symlink to {SKILLS_DIR} and is "
+                f"missing {len(missing)} skill(s): {', '.join(sorted(missing))} — "
+                "fix with: ln -sfn ~/.agents/skills ~/.claude/skills"
+            )
+        else:
+            self.warnings.append(
+                f"{CLAUDE_SKILLS_PATH} is a real dir of per-skill symlinks, not "
+                f"a symlink to {SKILLS_DIR} — new skills will drift. Fix with: "
+                "ln -sfn ~/.agents/skills ~/.claude/skills"
+            )
+
+    def _count_skills(self) -> int:
+        """Count skill directories in SKILLS_DIR."""
+        return sum(1 for s in SKILLS_DIR.iterdir() if s.is_dir())
+
     def generate_lookup_index(self) -> bool:
         """Generate .skills_lookup_index.json for O(1) keyword lookup.
 
         Returns:
             True if successful, False otherwise
         """
-        print(f"{BLUE}[5/5] Generating lookup index...{RESET}")
+        print(f"{BLUE}[6/6] Generating lookup index...{RESET}")
         try:
             lookup_index: Dict[str, List[str]] = {}
             for skill_name, skill_config in self.manifest.items():
@@ -294,6 +352,7 @@ class SkillValidator:
         self.check_dispatcher_integrity()
         self.check_semantic_trigger_collisions()
         self.validate_adopted_status_consistency()
+        self.check_platform_exposure()
 
         if generate_index:
             self.generate_lookup_index()
