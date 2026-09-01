@@ -1,4 +1,35 @@
 {
+  "agent-platform-deploy": {
+    "meta": {
+      "name": "Agent Platform Deploy",
+      "tier": "Reasoning",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "agent-platform-deploy"
+      ],
+      "semantic_triggers": [
+        "deploy model garden model",
+        "agent platform endpoint",
+        "undeploy endpoint",
+        "deployment cost",
+        "model deployment quota"
+      ],
+      "intent_category": "Deployment",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "CLI-Output"
+    },
+    "path": "skills/agent-platform-deploy"
+  },
   "ai-engineer": {
     "meta": {
       "name": "AI Engineer",
@@ -128,6 +159,39 @@
       "output_standard": "Markdown"
     },
     "path": "skills/ai-security-patterns"
+  },
+  "cloud-logging-configuration-basics": {
+    "meta": {
+      "name": "Cloud Logging Configuration Basics",
+      "tier": "Speed",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "cloud-logging-configuration-basics"
+      ],
+      "semantic_triggers": [
+        "log buckets",
+        "log sinks",
+        "log views",
+        "logs-based metrics",
+        "log exclusions"
+      ],
+      "intent_category": "Observability",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "google-cloud-networking-observability"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "CLI-Output"
+    },
+    "path": "skills/cloud-logging-configuration-basics"
   },
   "defuddle": {
     "meta": {
@@ -468,6 +532,103 @@
       "output_standard": "Markdown"
     },
     "path": "skills/google-agents-cli-workflow"
+  },
+  "google-cloud-networking-observability": {
+    "meta": {
+      "name": "Google Cloud Networking Observability",
+      "tier": "Reasoning",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "google-cloud-networking-observability"
+      ],
+      "semantic_triggers": [
+        "VPC flow logs",
+        "firewall logs",
+        "cloud NAT",
+        "connectivity tests",
+        "network latency metrics"
+      ],
+      "intent_category": "Observability",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "cloud-logging-configuration-basics"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "CLI-Output"
+    },
+    "path": "skills/google-cloud-networking-observability"
+  },
+  "google-cloud-recipe-auth": {
+    "meta": {
+      "name": "Google Cloud Recipe: Auth",
+      "tier": "Speed",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "google-cloud-recipe-auth"
+      ],
+      "semantic_triggers": [
+        "application default credentials",
+        "ADC",
+        "service account auth",
+        "gcloud auth login"
+      ],
+      "intent_category": "Infrastructure",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "google-cloud-recipe-onboarding"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "CLI-Output"
+    },
+    "path": "skills/google-cloud-recipe-auth"
+  },
+  "google-cloud-recipe-onboarding": {
+    "meta": {
+      "name": "Google Cloud Recipe: Onboarding",
+      "tier": "Speed",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "google-cloud-recipe-onboarding"
+      ],
+      "semantic_triggers": [
+        "first google cloud project",
+        "billing setup",
+        "gcloud init",
+        "new developer onboarding"
+      ],
+      "intent_category": "Infrastructure",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "google-cloud-recipe-auth"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "CLI-Output"
+    },
+    "path": "skills/google-cloud-recipe-onboarding"
   },
   "json-canvas": {
     "meta": {
@@ -862,6 +1023,41 @@
     },
     "path": "skills/obsidian-markdown"
   },
+  "opentelemetry": {
+    "meta": {
+      "name": "OpenTelemetry",
+      "tier": "Reasoning",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "opentelemetry",
+        "otel"
+      ],
+      "semantic_triggers": [
+        "instrument a service",
+        "OTLP endpoint",
+        "traces aren't showing",
+        "head vs tail sampling",
+        "auto-instrument"
+      ],
+      "intent_category": "Observability",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "k8s-observability-ops",
+        "python-dev-standard"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/opentelemetry"
+  },
   "platform-engineer": {
     "meta": {
       "name": "Platform Engineer",
@@ -1003,6 +1199,74 @@
     },
     "path": "skills/prd-generator"
   },
+  "product-decision-record": {
+    "meta": {
+      "name": "Product Decision Record",
+      "tier": "Speed",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "product-decision-record",
+        "pdr"
+      ],
+      "semantic_triggers": [
+        "scope decision",
+        "feature tradeoff",
+        "target customer",
+        "alternative rejected",
+        "why we chose"
+      ],
+      "intent_category": "Product Management",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "prd-generator",
+        "docs-agent"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [
+        "product-decision-record.md"
+      ],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/product-decision-record"
+  },
+  "pydantic": {
+    "meta": {
+      "name": "Pydantic",
+      "tier": "Speed",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "pydantic"
+      ],
+      "semantic_triggers": [
+        "data validation model",
+        "model hierarchy subclasses",
+        "field constraints"
+      ],
+      "intent_category": "Development",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "python-dev-standard"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Python"
+    },
+    "path": "skills/pydantic"
+  },
   "python-dev-standard": {
     "meta": {
       "name": "Python Dev Standard",
@@ -1037,6 +1301,38 @@
       "output_standard": "Python"
     },
     "path": "skills/python-dev-standard"
+  },
+  "quick-prd": {
+    "meta": {
+      "name": "Quick PRD",
+      "tier": "Speed",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "quick-prd"
+      ],
+      "semantic_triggers": [
+        "validated feature spec",
+        "POC to PRD",
+        "fast PRD",
+        "skip discovery"
+      ],
+      "intent_category": "Product Management",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "prd-generator"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "Markdown"
+    },
+    "path": "skills/quick-prd"
   },
   "slide-deck-creator": {
     "meta": {

@@ -45,11 +45,11 @@ Claude Code in this environment routes through an internal F5 proxy:
 ## TECHNICAL STANDARDS
 
 ### Languages & Frameworks
-- **Python:** 3.12+ exclusively. Strict Pydantic v2 for all data models. Mandatory OpenTelemetry instrumentation — no POC is complete without traces/metrics.
+- **Python:** 3.12+ exclusively. Strict Pydantic v2 for all data models. OpenTelemetry instrumentation is a nice-to-have during POC/prototyping — add it as the work matures or before engineering handoff, not a hard gate.
 - **Kubernetes:** Prefer Gateway API v1.1+ over legacy Ingress. Use Gateway Inference Extensions (`InferencePool`, `InferenceModel`) for AI workloads.
 - **Stack defaults:** Python + NGINX NJS + CrewAI/LangGraph patterns.
 - **Infrastructure:** Ubuntu 24.04, Docker, Docker Compose, vcluster, k3d, kind (in that priority order).
-- **Observability:** OpenTelemetry (mandatory on all new infrastructure).
+- **Observability:** OpenTelemetry (recommended as POCs mature; no longer a hard requirement during prototyping).
 
 ### Code Handoff
 - Engineers take over POCs and review/modify code as needed
@@ -209,9 +209,8 @@ The global `~/.agents/` directory is a JIT (Just-in-Time) skill dispatcher for s
 - Container everything: Docker for local dev, K8s for production
 
 ### Observability
-- All new Kubernetes/gateway/agentic infrastructure must be OTEL-instrumented
-- Mandatory: spans for request tracing, metrics for latency/errors/throughput
-- Dashboards in Prometheus/Grafana for visualization
+- OTEL instrumentation (spans for request tracing, metrics for latency/errors/throughput) is a nice-to-have — add it to POCs/prototypes when it adds value, not as a blocking requirement
+- Dashboards in Prometheus/Grafana once instrumented
 
 ## WHAT CLAUDE SHOULD NOT DO
 

@@ -30,12 +30,12 @@
 | Domain | Allowed Frameworks & Tools | Execution Constraint |
 |:---|:---|:---|
 | **Languages** | Python, Node.js, TypeScript | Default to Python for AI PoCs. Enforce strict typing in TS/Python. |
-| **Python** | Python 3.12+, Pydantic v2 | Mandatory OTEL instrumentation — no POC is complete without traces/metrics. |
+| **Python** | Python 3.12+, Pydantic v2 | OTEL instrumentation is a nice-to-have during POCs/prototyping — add it when it adds value, not a hard gate. |
 | **Kubernetes** | Gateway API v1.1+, Inference Extensions | Prefer Gateway API over legacy Ingress. Use `InferencePool`, `InferenceModel` for AI workloads. |
 | **Infrastructure** | vcluster, k3d, kind, Docker, Docker Compose | Priority order: vcluster > k3d > kind > Docker. GCP for GKE clusters. |
 | **DevOps** | GitHub Actions, GitLab CI, Helm | Use GitHub Actions by default. |
 | **K8s/GitOps** | kubectl, FluxCD, Helm | Treat cluster state as read-only for diagnostics. Use Flux for state mutation. |
-| **Observability** | OpenTelemetry, Prometheus, Grafana | Instrument logs and traces on all new kubernetes/gateway/agentic infrastructure. |
+| **Observability** | OpenTelemetry, Prometheus, Grafana | Recommended for kubernetes/gateway/agentic infrastructure as it matures; optional during early-stage POCs. |
 | **Stack defaults** | Python + NGINX NJS + CrewAI/LangGraph | For agentic patterns. |
 | **IDE** | VS Code, Zed, Antigravity | Shell: ZSH (no profile requirements). |
 
