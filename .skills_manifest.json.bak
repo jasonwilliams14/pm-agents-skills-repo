@@ -875,42 +875,6 @@
     },
     "path": "skills/k8s-observability-ops"
   },
-  "multi-stage-dockerfile": {
-    "meta": {
-      "name": "Multi-Stage Dockerfile",
-      "tier": "Reasoning",
-      "version": "1.0.0"
-    },
-    "routing": {
-      "explicit_triggers": [
-        "multi-stage-dockerfile",
-        "dockerfile"
-      ],
-      "semantic_triggers": [
-        "docker build",
-        "dockerfile optimization",
-        "multi-stage build",
-        "reduce image size",
-        "layer caching",
-        "distroless",
-        "container image security",
-        "docker healthcheck",
-        ".dockerignore"
-      ],
-      "intent_category": "Development",
-      "priority": 2
-    },
-    "composition": {
-      "primary_for": [],
-      "companion_skills": [],
-      "dependency_chain": ""
-    },
-    "artifacts": {
-      "preferred_templates": [],
-      "output_standard": "CLI-Output"
-    },
-    "path": "skills/multi-stage-dockerfile"
-  },
   "nginx-patterns": {
     "meta": {
       "name": "NGINX Expert",
