@@ -6,7 +6,6 @@ This file provides guidance to Claude Code when working with code, analysis, des
 
 ## ENVIRONMENT & API CONFIGURATION
 
-Claude Code in this environment routes through an internal F5 proxy:
 
 - `ANTHROPIC_BASE_URL`: `https://f5ai.pd.f5net.com/anthropic`
 - Default model: `sonnet[1m]` (claude-sonnet-4-6 with 1M context)
@@ -18,7 +17,7 @@ Claude Code in this environment routes through an internal F5 proxy:
 ## OWNER CONTEXT: JASON WILLIAMS
 
 ### Role & Responsibilities
-- **Title:** Principal TPM & Solutions Architect at F5
+- **Title:** Principal TPM & Solutions Architect 
 - **Core function:** Identify and escalate risk, needs, and value
 - **Stakeholders:** Architects, engineers, Director of Product Managers, Solutions/Sales Engineers
 - **Market:** Enterprise, large and mid-market customers
@@ -29,11 +28,13 @@ Claude Code in this environment routes through an internal F5 proxy:
 - **NGINX Ingress Controller** — Kubernetes ingress networking
 - **NGINX Gateway Fabric** — Advanced K8s gateway and routing
 - **F5 Distributed Cloud (XC)** — Multi-cloud platform and sovereignty
+- **AI Platform** - Platform for AI products.
 
 ### Primary Domains
 - **AI Security** — Guardrails, prompt injection, adversarial inputs, PII detection
-- **Kubernetes Networking** — Gateway API, routing, load balancing, traffic control
+- **Kubernetes Networking** — Gateway API, gateway inference extensions, AI in kubernetes, routing, load balancing, traffic control
 - **SaaS / Multi-Cloud Sovereignty** — Multi-cloud architectures, compliance, data residency
+- **AI** - All things AI, with gen AI, agents, agentic and observability
 
 ### Work Pattern
 - **Daily:** Designing, research, analysis, presentations, POCs (local K8s environments, some coding)
@@ -46,9 +47,9 @@ Claude Code in this environment routes through an internal F5 proxy:
 
 ### Languages & Frameworks
 - **Python:** 3.12+ exclusively. Strict Pydantic v2 for all data models. OpenTelemetry instrumentation is a nice-to-have during POC/prototyping — add it as the work matures or before engineering handoff, not a hard gate.
-- **Kubernetes:** Prefer Gateway API v1.1+ over legacy Ingress. Use Gateway Inference Extensions (`InferencePool`, `InferenceModel`) for AI workloads.
+- **Kubernetes:** Prefer Gateway API v1.1+ over legacy Ingress. Use Gateway Inference Extensions (`InferencePool`, `InferenceModel`) for AI workloads. AI specific items running in Kubernetes.
 - **Stack defaults:** Python + NGINX NJS + CrewAI/LangGraph patterns.
-- **Infrastructure:** Ubuntu 24.04, Docker, Docker Compose, vcluster, k3d, kind (in that priority order).
+- **Infrastructure:** Ubuntu 24.04, Docker, Docker Compose, vcluster, k3d, kind 
 - **Observability:** OpenTelemetry (recommended as POCs mature; no longer a hard requirement during prototyping).
 
 ### Code Handoff

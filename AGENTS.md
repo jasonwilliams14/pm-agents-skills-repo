@@ -1,9 +1,12 @@
 # AGENTS.md — Global Engineering Guardrails
 
-**This is the single global entry point for the agentic skill system.**
-Any agent tool (Pi, Claude Code, agy, codex, others) loads this file for judgment boundaries, toolchain rules, and the JIT skill dispatcher.
-Tool-specific config (e.g. `~/.claude/CLAUDE.md` for Claude, `~/.pi/agent/settings.json` for Pi)
-handles identity, owner context, and tool-specific settings on top of this file.
+> **This is the single global entry point for the agentic skill system.**
+> Any agent tool (Pi, Claude Code, agy, others) loads this file for judgment
+> boundaries, toolchain rules, and the JIT skill dispatcher.
+> Tool-specific config (e.g. `~/.claude/CLAUDE.md` for Claude, `~/.pi/agent/settings.json` for Pi)
+> handles identity, owner context, and tool-specific settings on top of this file.
+>
+> **⚠️ Symlink Note:** `~/.claude/CLAUDE.md` is symlinked to `~/.agents/CLAUDE.md` (single source of truth). All projects inherit this configuration. See [SETUP.md](SETUP.md) for architecture details.
 
 ---
 
@@ -195,39 +198,7 @@ Validates: dispatcher pipelines reference valid skills, templates exist, no sema
 
 ---
 
-## 6. Coordination Framework (The Orchestrator Persona)
-To ensure production-grade reliability and prevent architectural drift, the agent must operate as an **Orchestrator** using a **Hierarchical Delegation** pattern. The Orchestrator manages high-level goals and coordinates specialized subagents; it does not execute complex implementation tasks in isolation.
-
-### 6.1 Standard Operating Procedures (SOPs)
-Depending on the nature of the task, the Orchestrator must invoke one of the following two mandatory workflows:
-
-#### SOP A: The "Deep Work" Workflow (Features & Refactors)
-*Trigger: New features, significant refactors, or architectural changes.*
-**Sequence: `Plan` $\rightarrow$ `Implement` $\rightarrow$ `Review`**
-1. **Plan**: Invoke the `planner` to generate a scoped `IMPLEMENTATION_PLAN.md` containing technical analysis and atomic tasks.
-2. **Review (Design)**: Confirm the plan with the user before a single line of code is changed.
-3. **Implement**: Invoke the `coder` to execute the plan surgically.
-4. **Review (Audit)**: Invoke the `reviewer` for an adversarial audit against the plan.
-
-#### SOP B: The "Maintenance" Workflow (Bugs & Troubleshooting)
-*Trigger: Errors, log analysis, build failures, or regressions.*
-**Sequence: `Triage` $\rightarrow$ `Delegate` $\rightarrow$ `Verify`**
-1. **Triage**: Analyze the failure to identify the domain expert:
-   - **Infrastructure/Docker/K8s** $\rightarrow$ `platform-engineer`
-   - **Logic/API/Pydantic** $\rightarrow$ `coder` $\rightarrow$ `reviewer`
-   - **AI Logic/Prompt Drift** $\rightarrow$ `ai-engineer`
-   - **Security/Guardrails** $\rightarrow$ `ai-security-patterns`
-2. **Delegate**: Invoke the identified expert to diagnose and implement the fix.
-3. **Verify**: Provide an empirical proof (e.g., a specific `curl` or `docker logs` command) and obtain `reviewer` sign-off.
-
-### 6.2 The Global Verification Gate
-No technical task is considered "Complete" or "Resolved" until the following two criteria are met:
-1. **Empirical Proof**: The agent must provide and execute a specific bash command that demonstrates the fix/feature is working as intended.
-2. **Adversarial Sign-off**: A specialized `reviewer` agent must explicitly issue an "Approve" verdict after auditing the changes.
-
----
-
-## 7. Reasoning Style
+## 6. Reasoning Style
 
 - Concise, direct, architecture-first. No conversational filler.
 - Production-grade recommendations. Observability built in.
@@ -236,7 +207,7 @@ No technical task is considered "Complete" or "Resolved" until the following two
 
 ---
 
-## 8. Git & Collaboration
+## 7. Git & Collaboration
 
 - **Branching:** Atomic feature/fix branches (`feature/add-dynamic-routing`, `fix/nginx-timeout`). Never commit to `main`/`master` directly.
 - **Commits:** Semantic messages (`feat:`, `fix:`, `docs:`, `chore:`, `test:`). Include manual testing steps in PRs, link related issues.
@@ -245,7 +216,7 @@ No technical task is considered "Complete" or "Resolved" until the following two
 
 ---
 
-## 9. IP & Publishing
+## 8. IP & Publishing
 
 - **Internal:** Git-focused, all work versioned in private repos.
 - **Personal:** Blog posts, articles, public research (competitive, technical analysis).
@@ -253,7 +224,7 @@ No technical task is considered "Complete" or "Resolved" until the following two
 
 ---
 
-## 10. For Child Workspaces (Multi-Repo Strategy)
+## 9. For Child Workspaces (Multi-Repo Strategy)
 
 When a project repo contains a local `AGENTS.md` that references `~/.agents/`:
 
@@ -271,7 +242,7 @@ Load child workspace `AGENTS.md` first (local takes precedence), then fall back 
 
 ---
 
-## 11. Project AGENTS.md Layer
+## 10. Project AGENTS.md Layer
 
 Agent tools that support auto-loading (e.g. Pi) load this file first, then the
 project-level `AGENTS.md` on top. Project rules deep-merge and override global
