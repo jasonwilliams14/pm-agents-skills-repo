@@ -1,10 +1,9 @@
 # AGENTS.md — Global Engineering Guardrails
 
-> **This is the single global entry point for the agentic skill system.**
-> Any agent tool (Pi, Claude Code, agy, others) loads this file for judgment
-> boundaries, toolchain rules, and the JIT skill dispatcher.
-> Tool-specific config (e.g. `~/.claude/CLAUDE.md` for Claude, `~/.pi/agent/settings.json` for Pi)
-> handles identity, owner context, and tool-specific settings on top of this file.
+**This is the single global entry point for the agentic skill system.**
+Any agent tool (Pi, Claude Code, agy, codex, others) loads this file for judgment boundaries, toolchain rules, and the JIT skill dispatcher.
+Tool-specific config (e.g. `~/.claude/CLAUDE.md` for Claude, `~/.pi/agent/settings.json` for Pi)
+handles identity, owner context, and tool-specific settings on top of this file.
 
 ---
 
