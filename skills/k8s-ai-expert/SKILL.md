@@ -2,7 +2,7 @@
 name: k8s-ai-expert
 description: Expert guidance for deploying and scaling AI/ML workloads on Kubernetes
 globs: ["**/*.yaml", "**/*.yml", "**/Dockerfile", "**/helm/**"]
-triggers: ["gpu", "cuda", "inference", "llmops", "kserve", "keda", "operator"]
+triggers: ["gpu", "cuda", "inference", "llmops", "kserve", "keda", "operator", "vllm"]
 ---
 
 # Kubernetes × AI Expert
