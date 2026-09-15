@@ -223,14 +223,6 @@ The global `~/.agents/` directory is a JIT (Just-in-Time) skill dispatcher for s
 - Deploy to production without explicit approval
 - Make architectural decisions without consulting (propose with rationale, ask for confirmation)
 
-## FUTURE SECTIONS (TODO)
-
-The following sections will be added when refined:
-- **Section 2:** Weekly/monthly work rhythm and pain points
-- **Section 3:** Testing requirements, security boundaries, breaking change policies, dependency constraints
-- **Section 8:** Decision boundaries (low-risk, medium-risk, high-risk thresholds)
-- **Section 10:** Success criteria and metrics across different work types
-
 ## REFERENCES
 
 - Skill System: `~/.agents/RULES.md` (execution rules), `~/.agents/USAGE.md` (quick-start)

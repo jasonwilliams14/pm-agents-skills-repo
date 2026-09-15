@@ -1,9 +1,9 @@
 # AGENTS.md — Global Engineering Guardrails
 
 > **This is the single global entry point for the agentic skill system.**
-> Any agent tool (Pi, Claude Code, agy, others) loads this file for judgment
+> Any agent tool (Pi, Grok, Claude Code, agy, others) loads this file for judgment
 > boundaries, toolchain rules, and the JIT skill dispatcher.
-> Tool-specific config (e.g. `~/.claude/CLAUDE.md` for Claude, `~/.pi/agent/settings.json` for Pi)
+> Tool-specific config (`~/.grok/config.toml`, `~/.claude/CLAUDE.md` for Claude, `~/.pi/agent/settings.json` for Pi)
 > handles identity, owner context, and tool-specific settings on top of this file.
 >
 > **⚠️ Symlink Note:** `~/.claude/CLAUDE.md` is symlinked to `~/.agents/CLAUDE.md` (single source of truth). All projects inherit this configuration. See [SETUP.md](SETUP.md) for architecture details.
@@ -48,49 +48,19 @@
 
 ## 2. Universal Toolchain
 
-| Domain | Allowed Frameworks & Tools | Execution Constraint |
-|:---|:---|:---|
-| **Languages** | Python, Node.js, TypeScript | Default to Python for AI PoCs. Enforce strict typing in TS/Python. |
-| **Python** | Python 3.12+, Pydantic v2 | OTEL instrumentation is a nice-to-have during POCs/prototyping — add it when it adds value, not a hard gate. |
-| **Kubernetes** | Gateway API v1.1+, Inference Extensions | Prefer Gateway API over legacy Ingress. Use `InferencePool`, `InferenceModel` for AI workloads. |
-| **Infrastructure** | vcluster, k3d, kind, Docker, Docker Compose | Priority order: vcluster > k3d > kind > Docker. GCP for GKE clusters. |
-| **DevOps** | GitHub Actions, GitLab CI, Helm | Use GitHub Actions by default. |
-| **K8s/GitOps** | kubectl, FluxCD, Helm | Treat cluster state as read-only for diagnostics. Use Flux for state mutation. |
-| **Observability** | OpenTelemetry, Prometheus, Grafana | Recommended for kubernetes/gateway/agentic infrastructure as it matures; optional during early-stage POCs. |
-| **Stack defaults** | Python + NGINX NJS + CrewAI/LangGraph | For agentic patterns. |
-| **IDE** | VS Code, Zed, Antigravity | Shell: ZSH (no profile requirements). |
+Reference `~/.agents/references/universal-toolchain.md`
 
 ---
 
-## 3. Documentation & Communication
+## 3. Documentation
 
-### Three-Part Structure
-All strategic docs and PRDs use separate versions for different audiences:
-- **Executive version** — Value proposition, risk, business impact, timeline
-- **Product version** — User outcomes, feature scope, success metrics
-- **Engineering version** — Technical logic, constraints, implementation details, testing strategy
-
-### Locations
-- **Code:** GitHub (code repos), GitLab (pipelines)
-- **Strategic docs:** Confluence
-- **Project docs:** `docs/` folder (ADRs, design docs, technical specs)
-- **Personal research:** Obsidian vault (not shared/published)
-
-### Templates
-- **ADRs:** `~/.agents/templates/architecture-decision-record.md`
-- **Design Docs:** `~/.agents/templates/technical-design-doc.md`
-
-### Communication Style
-- Formal writing with quality prose. Visual emphasis: Mermaid diagrams for all architecture, workflows, decision flows.
-- Executive summaries first, detail second. No jargon unless explained.
+Reference `~/.agents/references/documentation.md` for guidelines and conventions
 
 ---
 
 ## 4. Deployment & Operations
 
-- **Deployment:** Canary deployments, traffic splitting, progressive rollouts, automated rollbacks. Primary platform: Kubernetes with GitOps (FluxCD/ArgoCD).
-- **Local testing:** vcluster (preferred) → k3d → kind → Docker Compose. Always test locally before proposing to engineering.
-- **Multi-cloud:** Follow Kubernetes and GitOps best practices across GCP, AWS, Azure.
+- **Local testing:** vcluster (preferred) → k3d → kind → Docker Compose. Always test locally.
 
 ---
 
@@ -100,7 +70,7 @@ The global `~/.agents/` directory is a JIT (Just-in-Time) skill dispatcher for s
 
 ### Principles
 - **Efficiency first, then thoroughness:** Prioritize the most efficient skill for the task, then consider thorough approaches.
-- **Skill recommendations:** Recommend new skills as needed — don't force existing skills.
+- **Skill recommendations:** Recommend new skills as needed, don't force existing skills.
 - **Retry logic:** If skill output is weak, retry 1–2 times with adjusted prompt, then escalate to the user.
 - **Trust level:** All skills equally trusted (no beta/experimental tiers).
 - **Composition limit:** Maximum 1 primary + 2 secondary skills per execution tree.
@@ -198,21 +168,15 @@ Validates: dispatcher pipelines reference valid skills, templates exist, no sema
 
 ---
 
-## 6. Reasoning Style
+## 6. Reasoning
 
-- Concise, direct, architecture-first. No conversational filler.
-- Production-grade recommendations. Observability built in.
-- Prefer: containerized workflows, FluxCD GitOps, API-first designs.
-- POC-first philosophy: validate with working code and demos, not slides.
+Reference `~/.agents/references/reasoning.md` for reasoning style.
 
 ---
 
 ## 7. Git & Collaboration
 
-- **Branching:** Atomic feature/fix branches (`feature/add-dynamic-routing`, `fix/nginx-timeout`). Never commit to `main`/`master` directly.
-- **Commits:** Semantic messages (`feat:`, `fix:`, `docs:`, `chore:`, `test:`). Include manual testing steps in PRs, link related issues.
-- **Code quality:** Run linter and test suite before declaring tasks complete. Type hints mandatory. `ruff` for Python, `pytest` for tests.
-- **Architecture:** API-first designs, streaming-aware (SSE, WebSockets), infrastructure-as-code (Terraform, Helm, FluxCD).
+Reference `~/.agents/references/git-collab.md` for using git and collaboration.
 
 ---
 
