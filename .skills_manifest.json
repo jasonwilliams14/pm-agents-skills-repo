@@ -1515,5 +1515,40 @@
       "output_standard": "YAML/Bash"
     },
     "path": "skills/vcluster-dev"
+  },
+  "alchemist-cicd-conventions": {
+    "meta": {
+      "name": "Alchemist CI/CD Conventions",
+      "tier": "Reasoning",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "alchemist-cicd",
+        "product-alchemist-ci"
+      ],
+      "semantic_triggers": [
+        "commit this",
+        "ready to merge",
+        "add a CI job",
+        "new sub-project"
+      ],
+      "intent_category": "CI/CD",
+      "priority": 2
+    },
+    "composition": {
+      "primary_for": [
+        "the-product-alchemist-repo-workflow"
+      ],
+      "companion_skills": [
+        "docs-agent"
+      ],
+      "dependency_chain": "alchemist-cicd-conventions -> docs-agent"
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "YAML/Markdown"
+    },
+    "path": "skills/alchemist-cicd-conventions"
   }
 }

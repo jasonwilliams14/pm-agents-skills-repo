@@ -1,357 +1,365 @@
 {
   "agent-platform-deploy": [
-    "model deployment quota",
+    "undeploy endpoint",
     "deployment cost",
-    "deploy model garden model",
-    "agent-platform-deploy",
     "agent platform endpoint",
-    "undeploy endpoint"
+    "model deployment quota",
+    "deploy model garden model",
+    "agent-platform-deploy"
   ],
   "ai-engineer": [
-    "ai-engineer",
-    "local LLM",
-    "llama.cpp",
-    "LLM integration",
-    "LangChain",
-    "MCP",
-    "Ollama",
     "ai-dev",
-    "crewai",
-    "PoC",
+    "agentic ai",
+    "MCP",
+    "LLM integration",
     "agentic workflows",
-    "agentic ai"
+    "Ollama",
+    "local LLM",
+    "PoC",
+    "LangChain",
+    "crewai",
+    "llama.cpp",
+    "ai-engineer"
   ],
   "ai-platform-pm": [
-    "deployment model",
-    "shared services",
-    "AI portfolio",
-    "ai-platform-pm",
-    "unit of value",
-    "platform-pm",
-    "conformance review",
     "platform conformance",
+    "ai-platform-pm",
+    "deployment model",
     "platform standards",
+    "AI portfolio",
+    "conformance review",
+    "platform-pm",
+    "product onboarding",
+    "unit of value",
     "cross-product",
-    "product onboarding"
+    "shared services"
   ],
   "ai-security-patterns": [
+    "guardrails",
+    "BOLA",
     "adversarial",
     "prompt injection",
-    "ai-sec",
     "OWASP LLM",
-    "jailbreak",
     "ai-security-patterns",
     "shadow api",
     "PII leakage",
-    "BOLA",
-    "guardrails"
+    "ai-sec",
+    "jailbreak"
   ],
   "cloud-logging-configuration-basics": [
-    "log exclusions",
-    "log buckets",
     "log views",
-    "logs-based metrics",
+    "log buckets",
+    "log exclusions",
     "log sinks",
+    "logs-based metrics",
     "cloud-logging-configuration-basics"
   ],
   "defuddle": [
-    "simplify web content",
-    "scrape",
-    "clean markdown",
+    "defuddle",
     "extract",
-    "defuddle"
+    "clean markdown",
+    "simplify web content",
+    "scrape"
   ],
   "docs-agent": [
-    "engineer handoff",
     "write docs",
-    "documentation",
     "update readme",
-    "docs-agent",
-    "technical writing"
+    "documentation",
+    "engineer handoff",
+    "technical writing",
+    "docs-agent"
   ],
   "find-skills": [
-    "discover capability",
-    "what skill",
     "how to do X",
-    "find-skills"
+    "find-skills",
+    "discover capability",
+    "what skill"
   ],
   "google-agents-cli-adk-code": [
     "ADK callbacks",
-    "agent tool definition",
     "ADK python",
+    "agent tool definition",
     "adk-code",
     "google-agents-cli-adk-code"
   ],
   "google-agents-cli-deploy": [
-    "deploy agent",
-    "google-agents-cli-deploy",
     "GKE agent deployment",
+    "google-agents-cli-deploy",
     "adk-deploy",
+    "deploy agent",
     "Cloud Run agent"
   ],
   "google-agents-cli-eval": [
-    "trajectory scoring",
-    "adk-eval",
-    "google-agents-cli-eval",
-    "LLM-as-judge",
     "agent evaluation",
-    "evalset"
+    "evalset",
+    "google-agents-cli-eval",
+    "adk-eval",
+    "LLM-as-judge",
+    "trajectory scoring"
   ],
   "google-agents-cli-observability": [
-    "prompt-response logging",
     "google-agents-cli-observability",
+    "Cloud Trace",
+    "prompt-response logging",
     "adk-obs",
-    "agent analytics",
-    "Cloud Trace"
+    "agent analytics"
   ],
   "google-agents-cli-publish": [
+    "adk-publish",
     "Gemini Enterprise publication",
-    "google-agents-cli-publish",
-    "register agent",
     "A2A registration",
-    "adk-publish"
+    "register agent",
+    "google-agents-cli-publish"
   ],
   "google-agents-cli-scaffold": [
     "start new ADK project",
-    "scaffold agent",
-    "adk-scaffold",
+    "google-agents-cli-scaffold",
     "create agent project",
-    "google-agents-cli-scaffold"
+    "adk-scaffold",
+    "scaffold agent"
   ],
   "google-agents-cli-workflow": [
-    "google-agents-cli-workflow",
     "ADK coding guidelines",
     "adk-workflow",
-    "agent development lifecycle",
-    "agent debugging"
+    "google-agents-cli-workflow",
+    "agent debugging",
+    "agent development lifecycle"
   ],
   "google-cloud-networking-observability": [
-    "firewall logs",
-    "connectivity tests",
-    "network latency metrics",
     "VPC flow logs",
+    "cloud NAT",
+    "network latency metrics",
+    "connectivity tests",
     "google-cloud-networking-observability",
-    "cloud NAT"
+    "firewall logs"
   ],
   "google-cloud-recipe-auth": [
     "application default credentials",
-    "gcloud auth login",
     "ADC",
+    "service account auth",
     "google-cloud-recipe-auth",
-    "service account auth"
+    "gcloud auth login"
   ],
   "google-cloud-recipe-onboarding": [
     "first google cloud project",
     "new developer onboarding",
     "google-cloud-recipe-onboarding",
-    "billing setup",
-    "gcloud init"
+    "gcloud init",
+    "billing setup"
   ],
   "json-canvas": [
-    ".canvas",
-    "nodes and edges",
     "visual mind map",
     "canvas-files",
     "canvas layout",
-    "json-canvas"
+    "json-canvas",
+    ".canvas",
+    "nodes and edges"
   ],
   "k8s-ai-expert": [
-    "k8s-ai-expert",
+    "vLLM deployment",
     "KEDA",
+    "k8s-ai-expert",
+    "ML workloads on K8s",
     "scaling AI pods",
     "KV cache",
-    "ML workloads on K8s",
-    "vLLM deployment",
     "GPU scheduling"
   ],
   "k8s-engineer": [
-    "Ingress",
+    "node affinity",
     "cluster networking",
     "fluxcd",
-    "node affinity",
-    "k8s-sme",
-    "volume mounts",
-    "vcluster",
-    "K8s troubleshooting",
-    "argocd",
+    "Ingress",
     "k8s-engineer",
-    "pod scheduling",
+    "k8s-sme",
+    "multi cluster",
+    "K8s troubleshooting",
     "k3d",
-    "multi cluster"
+    "vcluster",
+    "argocd",
+    "volume mounts",
+    "pod scheduling"
   ],
   "k8s-gateway-api": [
-    "GRPCRoute",
-    "ReferenceGrant",
     "HTTPRoute",
+    "agentgateway",
+    "ReferenceGrant",
     "KGateway",
+    "GRPCRoute",
     "Gateway API design",
     "GatewayClass",
-    "k8s-gateway-api",
-    "agentgateway"
+    "k8s-gateway-api"
   ],
   "k8s-gateway-inference": [
-    "k8s-gateway-inference",
-    "Gateway Inference Extensions",
-    "LLM load balancing",
     "InferencePool",
+    "Gateway Inference Extensions",
+    "k8s-gateway-inference",
+    "LLM load balancing",
     "model routing",
     "InferenceModel"
   ],
   "k8s-observability-ops": [
     "RED metrics",
-    "observability-ops",
+    "OpenTelemetry",
     "Jaeger",
+    "tracing",
+    "observability-ops",
     "Grafana",
     "Prometheus",
-    "ServiceMonitor",
-    "tracing",
-    "OpenTelemetry",
-    "otel-ops"
+    "otel-ops",
+    "ServiceMonitor"
   ],
   "multi-stage-dockerfile": [
-    "reduce image size",
-    "container image security",
-    "docker healthcheck",
-    "layer caching",
-    "dockerfile",
-    "multi-stage build",
     "dockerfile optimization",
     ".dockerignore",
-    "docker build",
+    "reduce image size",
+    "multi-stage build",
+    "docker healthcheck",
     "distroless",
-    "multi-stage-dockerfile"
+    "multi-stage-dockerfile",
+    "container image security",
+    "docker build",
+    "layer caching",
+    "dockerfile"
   ],
   "nginx-patterns": [
+    "proxy buffering",
     "nginx-patterns",
     "agentic routing",
-    "nginx-config",
-    "L7 tuning",
-    "upstream retries",
     "NGF",
-    "proxy buffering",
+    "SSE streaming",
     "nginx-sme",
-    "SSE streaming"
+    "upstream retries",
+    "nginx-config",
+    "L7 tuning"
   ],
   "obsidian-bases": [
-    ".base files",
     "obsidian formulas",
-    "database-like views",
+    "obsidian-bases",
+    ".base files",
     "note filters",
-    "obsidian-bases"
+    "database-like views"
   ],
   "obsidian-cli": [
-    "obsidian-cli",
-    "reload plugins",
-    "search vault",
     "obsidian automation",
-    "vault tasks"
+    "reload plugins",
+    "obsidian-cli",
+    "vault tasks",
+    "search vault"
   ],
   "obsidian-markdown": [
-    "wikilinks",
-    "properties",
     "embeds",
-    "obsidian-markdown",
     "markdown frontmatter",
-    "callouts"
+    "properties",
+    "callouts",
+    "obsidian-markdown",
+    "wikilinks"
   ],
   "opentelemetry": [
-    "auto-instrument",
-    "instrument a service",
+    "OTLP endpoint",
     "otel",
-    "head vs tail sampling",
-    "traces aren't showing",
     "opentelemetry",
-    "OTLP endpoint"
+    "instrument a service",
+    "traces aren't showing",
+    "auto-instrument",
+    "head vs tail sampling"
   ],
   "platform-engineer": [
-    "EKS",
-    "cloud provisioning",
-    "AKS",
-    "infrastructure",
-    "platform engineering",
-    "platform-engineer",
     "K8s admin",
-    "GKE"
+    "AKS",
+    "EKS",
+    "platform engineering",
+    "cloud provisioning",
+    "platform-engineer",
+    "GKE",
+    "infrastructure"
   ],
   "pm-standards": [
-    "OTEL PM metrics",
-    "JTBD",
     "pm-standards",
     "Jason Standard",
-    "RICE prioritization"
+    "OTEL PM metrics",
+    "RICE prioritization",
+    "JTBD"
   ],
   "positioning-messaging": [
-    "competitor messaging",
+    "value prop",
     "market positioning",
-    "positioning-messaging",
+    "competitor messaging",
     "launch copy",
-    "value prop"
+    "positioning-messaging"
   ],
   "prd-generator": [
-    "product requirements document",
-    "PRD creation",
     "PRD template",
-    "prd-generator"
+    "PRD creation",
+    "prd-generator",
+    "product requirements document"
   ],
   "product-decision-record": [
-    "product-decision-record",
-    "feature tradeoff",
-    "target customer",
-    "alternative rejected",
-    "pdr",
     "why we chose",
-    "scope decision"
+    "product-decision-record",
+    "scope decision",
+    "pdr",
+    "target customer",
+    "feature tradeoff",
+    "alternative rejected"
   ],
   "pydantic": [
     "data validation model",
+    "field constraints",
     "model hierarchy subclasses",
-    "pydantic",
-    "field constraints"
+    "pydantic"
   ],
   "python-dev-standard": [
-    "Pydantic",
-    "Google-style docstrings",
     "async code",
-    "python-dev-standard",
+    "Pydantic",
+    "type hinting",
     "clean python",
-    "type hinting"
+    "python-dev-standard",
+    "Google-style docstrings"
   ],
   "quick-prd": [
     "quick-prd",
-    "fast PRD",
     "POC to PRD",
+    "fast PRD",
     "skip discovery",
     "validated feature spec"
   ],
   "slide-deck-creator": [
-    "slide-deck-creator",
     "doc-to-slides",
-    "powerpoint",
     "presentation outline",
+    "slide deck",
+    "powerpoint",
     "pitch deck",
-    "slide deck"
+    "slide-deck-creator"
   ],
   "tech-pm": [
-    "roadmap",
     "architectural strategy",
-    "tech-pm",
     "product-strategy",
+    "prioritization",
     "feature scoping",
-    "prioritization"
+    "roadmap",
+    "tech-pm"
   ],
   "value-proposition": [
-    "customer value delivery",
+    "value-proposition",
     "competitive advantage",
     "JTBD value prop",
-    "value-proposition"
+    "customer value delivery"
   ],
   "vcluster-dev": [
-    "rapid cluster iteration",
-    "multi-cluster testing",
-    "vcluster",
-    "vcluster-dev",
-    "virtual cluster",
     "local K8s testing",
-    "lightweight K8s"
+    "multi-cluster testing",
+    "virtual cluster",
+    "rapid cluster iteration",
+    "lightweight K8s",
+    "vcluster",
+    "vcluster-dev"
+  ],
+  "alchemist-cicd-conventions": [
+    "alchemist-cicd",
+    "new sub-project",
+    "product-alchemist-ci",
+    "add a CI job",
+    "ready to merge",
+    "commit this"
   ]
 }
