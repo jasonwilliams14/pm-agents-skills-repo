@@ -1,227 +1,116 @@
 # AGENTS.md — Global Engineering Guardrails
 
-> **This is the single global entry point for the agentic skill system.**
-> Any agent tool (Pi, Grok, Claude Code, agy, others) loads this file for judgment
-> boundaries, toolchain rules, and the JIT skill dispatcher.
-> Tool-specific config (`~/.grok/config.toml`, `~/.claude/CLAUDE.md` for Claude, `~/.pi/agent/settings.json` for Pi)
-> handles identity, owner context, and tool-specific settings on top of this file.
->
-> **⚠️ Symlink Note:** `~/.claude/CLAUDE.md` is symlinked to `~/.agents/CLAUDE.md` (single source of truth). All projects inherit this configuration. See [SETUP.md](SETUP.md) for architecture details.
+Single entry for judgment, toolchain, and JIT skills. Tool-specific identity lives in
+`~/.grok/config.toml` (Grok), `~/.claude/CLAUDE.md` (Claude Code), `~/.pi/agent/settings.json` (Pi).
 
----
+Pipelines and skill index stay on disk: `~/.agents/dispatcher.yaml` and
+`~/.agents/.skills_manifest.json`. Open those files when needed; do not treat this
+document as a copy of either.
 
-## 1. Judgment Boundaries (Three-Tier Enforcement)
+## Owner
+
+Principal TPM & Solutions Architect. Escalate risk, needs, and value.
+Products: All things Kubernetes, AI in Kubernetes, NGINX Ingress Controller, NGINX Gateway Fabric
+Domains: AI security, Kubernetes (Gateway API, inference, CKA/CKAD/Kubestronaut certs), multi-cloud sovereignty, gen-AI/agents.
+POC-first: working code before slides. Docs come from prototypes.
+Python 3.12+, Pydantic v2, Gateway API v1.1+ (`InferencePool`, `InferenceModel`, evolving Kubernetes KEP and GEP).
+Local K8s: vcluster → k3d → kind → Docker Compose. GitOps (FluxCD / ArgoCD)
+
+## 1. Judgment Boundaries
 
 ### NEVER
-- **Destructive Operations:** Never delete files, directories, git branches, or run
-  destructive commands (`rm -rf`, `git reset --hard`, `git push --force`, `kubectl delete`,
-  `terraform destroy`) without explicit user confirmation.
-- **Unverified Commits:** Never commit, stage, or push code changes without successfully
-  running the workspace test runner/linter first.
-- **Legacy Assets:** Never install deprecated libraries or legacy dependencies.
-- **File Overwrites:** Never overwrite configuration files outside your designated
-  operational scope.
+- Delete files, directories, or git branches, or run `rm -rf`, `git reset --hard`,
+  `git push --force`, `kubectl delete`, `terraform destroy` without explicit confirmation.
+- Commit, stage, or push without a successful workspace linter/test run.
+- Install deprecated libraries.
+- Overwrite configuration outside the current operational scope.
 
 ### ASK
-- **High-Risk Changes:** Stop and ask before executing refactors, network security changes,
-  cluster state modifications, authentication/authorization flow changes, data migrations,
-  schema changes, or breaking API changes.
-- **Ambiguity:** Ask for clarification if a task instruction conflicts with existing workspace
-  configurations or schemas.
-- **Architectural Decisions:** Propose with rationale, ask for confirmation — never decide
-  unilaterally.
+- Refactors across multiple files/services, network/security policy, cluster state,
+  authn/authz, data/schema migration, breaking APIs.
+- Instructions that conflict with existing workspace config or schemas.
+- Architectural decisions: propose with rationale, wait for confirmation.
 
 ### ALWAYS
-- **Verification Loop:** Always execute the workspace linter and test suite before declaring
-  a coding task complete.
-- **Mermaid Diagrams:** Always render structural, temporal, or workflow visuals using
-  Mermaid.js syntax blocks (not ASCII art, not external tools).
-- **Immutable Docs:** Always capture architectural decisions and technical documentation in
-  `docs/` using Markdown.
-- **Skill Delegation:** Always check `~/.agents/skills/` for a specialized capability before
-  attempting a complex, multi-step workflow.
-- **Codebase Traversal:** Always use grep or regex to locate target code blocks before
-  opening a file. Never read more than 150 lines of a single file unless inspecting a
-  complete logic flow is strictly required.
-
----
+- Run the workspace linter and tests before calling a coding task complete.
+- Render structure, sequence, and workflow as Mermaid in markdown fences.
+- Put ADRs and technical docs in project `docs/` as Markdown.
+- For a complex workflow, grep `~/.agents/.skills_manifest.json` and load at most
+  one primary skill plus two secondary skills.
+- Locate code with grep/regex before opening a file. Read more than 150 lines only
+  when a full logic flow is required.
 
 ## 2. Universal Toolchain
 
-Reference `~/.agents/references/universal-toolchain.md`
-
----
+`~/.agents/references/universal-toolchain.md`
 
 ## 3. Documentation
 
-Reference `~/.agents/references/documentation.md` for guidelines and conventions
-
----
+`~/.agents/references/documentation.md`
 
 ## 4. Deployment & Operations
 
-- **Local testing:** vcluster (preferred) → k3d → kind → Docker Compose. Always test locally.
-
----
+Test locally before proposing to engineering. Treat live cluster state as read-only
+for diagnostics; mutate via FluxCD.
 
 ## 5. Skill System (`~/.agents/`)
 
-The global `~/.agents/` directory is a JIT (Just-in-Time) skill dispatcher for specialized tasks.
+JIT only. Never preload skill bodies. Never crawl a project `./skills/` tree.
 
-### Principles
-- **Efficiency first, then thoroughness:** Prioritize the most efficient skill for the task, then consider thorough approaches.
-- **Skill recommendations:** Recommend new skills as needed, don't force existing skills.
-- **Retry logic:** If skill output is weak, retry 1–2 times with adjusted prompt, then escalate to the user.
-- **Trust level:** All skills equally trusted (no beta/experimental tiers).
-- **Composition limit:** Maximum 1 primary + 2 secondary skills per execution tree.
-- **Subagent returns:** Compress into structured YAML summary before returning to parent.
+1. Match `~/.agents/dispatcher.yaml` (project copy first, then global). On a hit,
+   load skills in that sequence and compress each step to YAML (status, changes, errors).
+2. Otherwise grep `~/.agents/.skills_manifest.json`, then read only
+   `~/.agents/skills/<name>/SKILL.md`.
+3. Max 1 primary + 2 secondary per tree. Retry a weak skill once or twice, then ask.
+4. Templates (`~/.agents/templates/`) only when generating an artifact.
+5. Project `AGENTS.md` overrides this file.
 
-### Skill Loading — Lazy Discovery Only
-Skills live in `~/.agents/skills/`. Never preload. Never crawl local `./skills/`.
-- **Discovery process:**
-  1. Grep manifest for trigger keyword: `grep -i -C 4 '"keyword"' ~/.agents/.skills_manifest.json`
-  2. Read only the matching `~/.agents/skills/<name>/SKILL.md`
-  3. Unload after use — no cross-task bleed
-- **Hard limit:** 1 primary skill + 2 secondary skills per task tree
-- **Companion limit:** Load companions only if task crosses domains. Max 2.
+Pipelines (open `~/.agents/dispatcher.yaml` for the sequence):
+`cluster-lifecycle`, `ai-gateway-deployment`, `agentic-routing-poc`,
+`cluster-troubleshooting`, `product-definition`.
 
-### Dispatcher — Pipeline First
-Before doing anything, check if the request matches a pipeline in `~/.agents/dispatcher.yaml`.
-- **Match found** → load skills in the defined sequence, compress each step's output before passing to the next
-- **No match** → grep `.skills_manifest.json` semantic_triggers for the best skill fit
-- **Crystallized Insight:** Each pipeline step output = compressed YAML summary (status, changes, errors only)
-
-### Retrieval Order
-1. `~/.agents/.skills_manifest.json` — grep for skill (fast lookup)
-2. `~/.agents/skills/<name>/SKILL.md` — hydrate only the matched skill
-3. Project `AGENTS.md` — local context overrides
-4. `~/.agents/templates/` — only during artifact generation
-
-### Context Loading
-
-When a project references `~/.agents/`:
-1. Load the project's `AGENTS.md` first (local overrides global).
-2. Load this file (`~/.agents/AGENTS.md`) for judgment boundaries and toolchain.
-3. Load tool-specific config (e.g. `~/.claude/CLAUDE.md`, Pi settings) for owner context and identity.
-4. Match task intent against `dispatcher.yaml` (local) then `~/.agents/dispatcher.yaml` (global).
-5. Load relevant skill(s) from `~/.agents/skills/` when the task matches.
-
-If a project has no `AGENTS.md`, fall back to these global rules. Note which files you're using.
-
-### Dispatcher Pipelines
-
-| Pipeline | Trigger Intent | Skill Sequence |
-|---|---|---|
-| `cluster-lifecycle` | Provision K8s clusters, GitOps bootstrap | platform-engineer → k8s-engineer → k8s-observability-ops |
-| `ai-gateway-deployment` | Deploy AI gateway with inference routing | k8s-gateway-api → k8s-gateway-inference → nginx-patterns → k8s-observability-ops |
-| `agentic-routing-poc` | Build agentic routing PoC | ai-engineer → nginx-patterns+k8s-gateway-api → k8s-observability-ops → docs-agent |
-| `cluster-troubleshooting` | Debug K8s issues | k8s-engineer → platform-engineer → k8s-engineer+platform-engineer → docs-agent |
-| `product-definition` | Market gap to PRD | tech-pm → value-proposition → pm-standards → prd-generator → slide-deck-creator |
-
-See `~/.agents/dispatcher.yaml` for full step-by-step definitions.
-
-### Skill Registry
-
-#### Active Skills (in dispatcher pipelines — highest priority)
-| Skill | Explicit Triggers | Semantic Triggers (sample) |
-|---|---|---|
-| `ai-engineer` | ai-engineer, ai-dev | PoC, agentic workflows, LangChain, MCP, Ollama, local LLM |
-| `ai-security-patterns` | ai-security-patterns, ai-sec | prompt injection, OWASP LLM, guardrails, jailbreak |
-| `k8s-engineer` | k8s-engineer, k8s-sme | Ingress, cluster networking, pod scheduling, vcluster, FluxCD |
-| `k8s-gateway-api` | k8s-gateway-api | GatewayClass, HTTPRoute, GRPCRoute, agentgateway |
-| `k8s-gateway-inference` | k8s-gateway-inference | InferencePool, model routing, LLM load balancing |
-| `k8s-observability-ops` | observability-ops, otel-ops | OpenTelemetry, Prometheus, Grafana, tracing, RED metrics |
-| `nginx-patterns` | nginx-patterns, nginx-sme | SSE streaming, proxy buffering, L7 tuning, NGF |
-| `platform-engineer` | platform-engineer | infrastructure, K8s admin, GKE, AKS, EKS, cloud provisioning |
-| `docs-agent` | docs-agent, documentation | technical writing, ADR, engineer handoff |
-| `tech-pm` | tech-pm, product-strategy | feature scoping, roadmap, prioritization |
-| `prd-generator` | prd-generator | PRD template, product requirements document |
-
-#### Maintained Skills (available but not in active pipelines)
-| Skill | Explicit Triggers | Semantic Triggers (sample) |
-|---|---|---|
-| `vcluster-dev` | vcluster-dev, vcluster | virtual cluster, multi-cluster testing, lightweight K8s |
-| `k8s-ai-expert` | k8s-ai-expert | ML workloads, GPU scheduling, vLLM, KV cache, KEDA |
-| `ai-platform-pm` | ai-platform-pm, platform-pm | platform conformance, cross-product, AI portfolio |
-| `python-dev-standard` | python-dev-standard | Pydantic, type hinting, async code, clean python |
-| `pm-standards` | pm-standards | JTBD, RICE, Jason Standard |
-| `value-proposition` | value-proposition | JTBD value prop, competitive advantage |
-| `obsidian-markdown` | obsidian-markdown | wikilinks, callouts, frontmatter, embeds |
-| `obsidian-cli` | obsidian-cli | search vault, vault tasks, obsidian automation |
-| `obsidian-bases` | obsidian-bases | .base files, database views, obsidian formulas |
-| `json-canvas` | json-canvas, canvas-files | .canvas, visual mind map, nodes and edges |
-| `defuddle` | defuddle | extract web content, clean markdown from URL |
-| `slide-deck-creator` | slide-deck-creator, doc-to-slides | presentation, slide deck, PowerPoint |
-| `positioning-messaging` | positioning-messaging | competitor messaging, market positioning |
-| `google-agents-cli-*` | adk-*, google-agents-cli-* | Google ADK, agent scaffold, deploy, eval, publish |
-| `find-skills` | find-skills | what skill, discover capability |
-
-> **Skill path pattern:** `~/.agents/skills/<skill-name>/SKILL.md`
-
-### Validation
-
-```bash
-python3 ~/.agents/validate-skills.py --strict
-```
-
-Validates: dispatcher pipelines reference valid skills, templates exist, no semantic trigger collisions, adopted status consistent.
-
----
+Recommend a new skill when the job is repeatable and no existing skill fits.
+Validate with `python3 ~/.agents/validate-skills.py --strict` when editing skills
+or the dispatcher.
 
 ## 6. Reasoning
 
-Reference `~/.agents/references/reasoning.md` for reasoning style.
-
----
+`~/.agents/references/reasoning.md`
 
 ## 7. Git & Collaboration
 
-Reference `~/.agents/references/git-collab.md` for using git and collaboration.
-
----
+`~/.agents/references/git-collab.md`
+Conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `test:`). Feature branches;
+never commit straight to `main`/`master`.
 
 ## 8. IP & Publishing
 
-- **Internal:** Git-focused, all work versioned in private repos.
-- **Personal:** Blog posts, articles, public research (competitive, technical analysis).
-- **Competitive analysis:** Yes — conduct and document competitive research and differentiation.
+Internal work in private git. Personal: posts and competitive/technical analysis.
+Competitive research is in scope.
 
----
+## 9. Child workspaces
 
-## 9. For Child Workspaces (Multi-Repo Strategy)
-
-When a project repo contains a local `AGENTS.md` that references `~/.agents/`:
+A repo `AGENTS.md` may inherit:
 
 ```markdown
-# child-project/AGENTS.md
 This project inherits from ~/.agents/:
-- Use judgment boundaries from ~/.agents/AGENTS.md
-- Use skill system from ~/.agents/skills/
-- Use dispatcher pipelines from ~/.agents/dispatcher.yaml
-
-Local overrides: [none, or list specific overrides]
+- Judgment: ~/.agents/AGENTS.md
+- Skills: ~/.agents/skills/
+- Pipelines: ~/.agents/dispatcher.yaml
+Local overrides: [none, or list]
 ```
 
-Load child workspace `AGENTS.md` first (local takes precedence), then fall back to `~/.agents/` for referenced files.
+Load the project file first, then this file.
 
----
+## Communication Style
 
-## 10. Project AGENTS.md Layer
-
-Agent tools that support auto-loading (e.g. Pi) load this file first, then the
-project-level `AGENTS.md` on top. Project rules deep-merge and override global
-rules where keys conflict. Current project context is injected by the tool —
-no action needed.
-
----
+Formal or casual as the audience requires. Clear, concise prose; explain jargon.
+Lead with the answer or executive summary, then detail.
+No emojis, icons, or decorative symbols unless the user asks for them in an artifact.
 
 ## References
 
-- **Skill System:** `~/.agents/skills/`, `~/.agents/.skills_manifest.json`
-- **Execution Rules:** `~/.agents/RULES.md`
-- **Quick-Start Lookup:** `~/.agents/USAGE.md`
-- **Dispatcher Pipelines:** `~/.agents/dispatcher.yaml`
-- **Templates:** `~/.agents/templates/`
-- **Skill Maintenance:** `~/.agents/SKILL_MAINTENANCE.md`
-- **Tool-specific identity:** `~/.claude/CLAUDE.md` (Claude Code), `~/.pi/agent/settings.json` (Pi)
-- **Validation:** `python3 ~/.agents/validate-skills.py --strict`
+- Skills / manifest: `~/.agents/skills/`, `~/.agents/.skills_manifest.json`
+- Dispatcher: `~/.agents/dispatcher.yaml`
+- Rules / usage: `~/.agents/RULES.md`, `~/.agents/USAGE.md`
+- Templates: `~/.agents/templates/`
