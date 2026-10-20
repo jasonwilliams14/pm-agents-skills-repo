@@ -1,0 +1,16 @@
+# Model Mappings for Agentic Integrations
+# This file maps specific domains/integrations to the best-suited LLM from the Ollama Cloud configuration.
+
+integrations:
+  linear:
+    primary_model: "gpt-oss:120b-cloud"
+    secondary_model: "qwen3.5:cloud"
+    rationale: "Complex planning, reasoning, and schema reliability for project management."
+  gitlab:
+    primary_model: "deepseek-v4-pro:cloud"
+    secondary_model: "kimi-k2.7-code:cloud"
+    rationale: "SOTA coding, SWE-bench performance, and technical precision for repo management."
+  repo_analysis:
+    primary_model: "kimi-k3:cloud"
+    secondary_model: "deepseek-v4-pro:cloud"
+    rationale: "Massive context window for wide-scope synthesis across multiple files."

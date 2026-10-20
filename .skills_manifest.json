@@ -1550,5 +1550,41 @@
       "output_standard": "YAML/Markdown"
     },
     "path": "skills/alchemist-cicd-conventions"
+  },
+  "linear-specialist": {
+    "meta": {
+      "name": "Linear Specialist",
+      "tier": "Reasoning",
+      "version": "1.0.0"
+    },
+    "routing": {
+      "explicit_triggers": [
+        "linear-specialist",
+        "linear"
+      ],
+      "semantic_triggers": [
+        "linear ticket",
+        "create issue",
+        "triage tickets",
+        "update linear",
+        "sprint planning",
+        "linear project",
+        "ticket status"
+      ],
+      "intent_category": "Project Management",
+      "priority": 1
+    },
+    "composition": {
+      "primary_for": [],
+      "companion_skills": [
+        "docs-agent"
+      ],
+      "dependency_chain": ""
+    },
+    "artifacts": {
+      "preferred_templates": [],
+      "output_standard": "CLI-Output"
+    },
+    "path": "skills/linear"
   }
 }
